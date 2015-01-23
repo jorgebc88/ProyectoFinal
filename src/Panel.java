@@ -11,6 +11,9 @@ import javax.swing.*;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;  
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;  
 import org.opencv.objdetect.CascadeClassifier;
  public class Panel extends JPanel{  
@@ -76,9 +79,13 @@ import org.opencv.objdetect.CascadeClassifier;
     frame.setVisible(true);       
     Mat webcam_image=new Mat();  
     BufferedImage temp;  
-    VideoCapture capture =new VideoCapture(0);  
-    CascadeClassifier face_cascade = null; 
-    String face_cascade_name = "haarcascade_frontalface_alt.xml";
+    VideoCapture capture =new VideoCapture(0);
+    CascadeClassifier faceDetector = new CascadeClassifier();
+
+    CascadeClassifier face_cascade = new CascadeClassifier(); 
+    String face_cascade_name = panel.getClass().getResource("/haarcascade_frontalface_alt.xml").getPath();
+    Mat image = Highgui.imread(panel.getClass().getResource("/prueba.bmp").getPath());
+
     if(!face_cascade.load(face_cascade_name)){
     	System.out.println("hola");
     }
@@ -87,12 +94,23 @@ import org.opencv.objdetect.CascadeClassifier;
     	Thread.sleep(1000);
       while( true )  
       {  
-        capture.read(webcam_image);  
+        //capture.read(image);  
+        // Detect faces in the image.
+        // MatOfRect is a special container class for Rect.
+        MatOfRect faceDetections = new MatOfRect();
+        face_cascade.detectMultiScale(image, faceDetections);
+        System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
+
+        // Draw a bounding box around each face.
+        for (Rect rect : faceDetections.toArray()) {
+            Core.rectangle(image, new org.opencv.core.Point(rect.x, rect.y), new org.opencv.core.Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+        }
         
-        if( !webcam_image.empty() )  
+        if( !image.empty() )  
          {  
-           frame.setSize(webcam_image.width()+40,webcam_image.height()+60);  
-           temp=matToBufferedImage(webcam_image);  
+           frame.setSize(image.width()+40,image.height()+60);  
+           temp=matToBufferedImage(image);  
+           //Highgui.imwrite("prueba.jpg", image);
            panel.setimage(temp);  
            panel.repaint();  
          }  
@@ -105,7 +123,4 @@ import org.opencv.objdetect.CascadeClassifier;
        }  
        return;  
    }  
-   public void extra(){
-	   CascadeClassifier face_cascade; 
-   }
- }  
+    }  
