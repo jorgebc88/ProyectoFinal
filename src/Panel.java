@@ -83,10 +83,10 @@ import org.opencv.objdetect.CascadeClassifier;
     CascadeClassifier faceDetector = new CascadeClassifier();
 
     CascadeClassifier face_cascade = new CascadeClassifier("C:/Users/Jorge/workspace/ProyectoFinal/bin/lbpcascade_frontalface.xml"); 
-    CascadeClassifier eye_cascade = new CascadeClassifier("C:/opencv/sources/data/haarcascades/haarcascade_mcs_nose.xml");
+    //CascadeClassifier eye_cascade = new CascadeClassifier("C:/opencv/sources/data/haarcascades/haarcascade_mcs_nose.xml");
     String face_cascade_name = panel.getClass().getResource("/haarcascade_frontalface_alt.xml").getPath();
     //Mat image = Highgui.imread(panel.getClass().getResource("/prueba.bmp").getPath());
-    if(face_cascade.empty() || eye_cascade.empty()){
+    if(face_cascade.empty() ){
         	System.out.println("Empty");
 
     }
@@ -104,18 +104,18 @@ import org.opencv.objdetect.CascadeClassifier;
         MatOfRect faceDetections = new MatOfRect();
         MatOfRect eyeDetections = new MatOfRect();
         face_cascade.detectMultiScale(image, faceDetections);
-        eye_cascade.detectMultiScale(image, eyeDetections);
+        //eye_cascade.detectMultiScale(image, eyeDetections);
         System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
-        System.out.println(String.format("Detected %s eyes", eyeDetections.toArray().length));
+        //System.out.println(String.format("Detected %s eyes", eyeDetections.toArray().length));
 
 
         // Draw a bounding box around each face.
         for (Rect rect : faceDetections.toArray()) {
             Core.rectangle(image, new org.opencv.core.Point(rect.x, rect.y), new org.opencv.core.Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
         }
-        for (Rect rect : eyeDetections.toArray()) {
-            Core.rectangle(image, new org.opencv.core.Point(rect.x, rect.y), new org.opencv.core.Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
-        }
+//        for (Rect rect : eyeDetections.toArray()) {
+//            Core.rectangle(image, new org.opencv.core.Point(rect.x, rect.y), new org.opencv.core.Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+//        }
         
         if( !image.empty() )  
          {  
