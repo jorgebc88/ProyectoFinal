@@ -122,7 +122,9 @@ import org.opencv.video.KalmanFilter;
 		    String path;
 		    path = "C:/Traffic.avi";
 		    VideoCapture capture =new VideoCapture();
-		    capture.open("C:/video.avi");
+		    //Para que funciones el VideoCapture con un video en el equipo hay q agregar 
+		    //"C:\opencv\build\x64\vc12\bin" al path en las variables del sistema
+		    capture.open("C:/video.avi"); 
 		    if( capture.isOpened())  
 		    {  
 		    	while( true )  
