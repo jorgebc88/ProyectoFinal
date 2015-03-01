@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.unt</groupId>
+  <artifactId>proyectoFinal</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Proyecto Final</name>
+  <description>Reconocimiento de imagenes usando Opencv y Javacv</description>
+  
+  <dependencies>
+  	<dependency>
+    	<groupId>org.bytedeco</groupId>
+    	<artifactId>javacv</artifactId>
+    	<version>0.10</version>
+  	</dependency>
+  	<!--  
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>artoolkitplus</artifactId>
+  		<version>2.3.1-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>ffmpeg</artifactId>
+  		<version>2.5.1-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>flandmark</artifactId>
+  		<version>1.07-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>flycapture</artifactId>
+  		<version>2.7.3.13-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>libdc1394</artifactId>
+  		<version>2.2.2-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>libfreenect</artifactId>
+  		<version>0.5.1-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>opencv</artifactId>
+  		<version>2.4.10-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco.javacpp-presets</groupId>
+  		<artifactId>videoinput</artifactId>
+  		<version>0.200-0.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.bytedeco</groupId>
+  		<artifactId>javacpp</artifactId>
+  		<version>0.10</version>
+  		<type>maven-plugin</type>
+  	</dependency>
+  	-->
+  </dependencies>
+  
+  
+  
+</project>
