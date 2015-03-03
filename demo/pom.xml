@@ -6,11 +6,29 @@
   <name>BlobDemo</name>
   
   <dependencies>
-  <dependency>
+  	
+  	<dependency>
     	<groupId>org.bytedeco</groupId>
     	<artifactId>javacv</artifactId>
-    	<version>0.10</version>
+    	<version>0.8</version>
   	</dependency>
+  	
+  	<dependency>
+		<groupId>org.bytedeco</groupId>
+		<artifactId>javacpp</artifactId>
+		<version>0.8</version>
+		<type>maven-plugin</type>
+	</dependency>
+  	
+  	<!--    
+  	<dependency>
+		<groupId>org.bytedeco</groupId>
+		<artifactId>javacpp-presets</artifactId>
+		<version>0.8</version>
+		<type>maven-plugin</type>
+	</dependency>
+  	-->
+  	 	
   </dependencies>
   
 </project>
