@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS sp_findByDay
+
+DELIMITER $$
+CREATE PROCEDURE sp_findByDay(d DATE)
+BEGIN
+	SELECT * FROM DetectedObject WHERE EXTRACT(DAY FROM d) = EXTRACT(DAY FROM DetectedObject.`date`)
+    ORDER BY `date` ASC;
+END
+$$

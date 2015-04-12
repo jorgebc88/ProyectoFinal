@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS sp_findByMonth
+
+DELIMITER $$
+CREATE PROCEDURE sp_findByMonth(d DATE)
+BEGIN
+	SELECT * FROM DetectedObject WHERE EXTRACT(MONTH FROM d) = EXTRACT(MONTH FROM DetectedObject.`date`)
+    ORDER BY `date` ASC;
+END
+$$

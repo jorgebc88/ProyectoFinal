@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS sp_findByYear
+
+DELIMITER $$
+CREATE PROCEDURE sp_findByYear(d DATE)
+BEGIN
+	SELECT * FROM DetectedObject WHERE EXTRACT(YEAR FROM d) = EXTRACT(YEAR FROM DetectedObject.`date`)
+    ORDER BY `date` ASC;
+END
+$$
