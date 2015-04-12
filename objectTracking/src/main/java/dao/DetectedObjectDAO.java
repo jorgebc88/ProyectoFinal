@@ -6,7 +6,6 @@ import java.util.List;
 import models.DetectedObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
 
 import repositories.DetectedObjectRepository;
@@ -36,6 +35,10 @@ public class DetectedObjectDAO{
 	public List<DetectedObject> getObjectsBetweenDates(Date startDate,
 			Date endDate) {
 		return detectedObjectRepository.findBetweenDates(startDate, endDate);
+	}
+	
+	public void createObject(String direction, String objectType, Date date){
+		detectedObjectRepository.createObject(direction, objectType, date);
 	}
 
 }
