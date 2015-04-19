@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 /**
@@ -16,8 +15,8 @@ public class DetectedObjectImp implements DetectedObject, Serializable{
     @Column(name = "object_Id")
     private Long id;
 
-    @Column(name = "direcction")
-    private String direcction;
+    @Column(name = "direction")
+    private String direction;
 
     @Column(name = "objectType")
     private String ObjectType;
@@ -27,7 +26,7 @@ public class DetectedObjectImp implements DetectedObject, Serializable{
 
     public DetectedObjectImp(Long id, String direcction, String objectType, Calendar date) {
         this.id = id;
-        this.direcction = direcction;
+        this.direction = direcction;
         ObjectType = objectType;
         this.date = date;
     }
@@ -36,8 +35,8 @@ public class DetectedObjectImp implements DetectedObject, Serializable{
         this.id = id;
     }
 
-    public void setDirecction(String direcction) {
-        this.direcction = direcction;
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public void setObjectType(String objectType) {
@@ -52,8 +51,8 @@ public class DetectedObjectImp implements DetectedObject, Serializable{
         return id;
     }
 
-    public String getDirecction() {
-        return direcction;
+    public String getDirection() {
+        return direction;
     }
 
     public String getObjectType() {
