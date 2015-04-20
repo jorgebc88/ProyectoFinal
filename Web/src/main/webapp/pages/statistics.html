@@ -1,0 +1,121 @@
+<div id="statistics" class="container">
+  <div class="row">
+
+    <div class="container col-xs-12 col-sm-10 col-sm-offset-1 col-md-3 col-md-offset-1">
+      <h1>Advanced Search</h1>
+      <div class="container col-xs-12 form-group">
+        <h4><strong>Select the search type:</strong></h4>
+        <div class="btn-group">
+          <label ng-click="showToday=true; showDay=false; showRange=false; showHour=true" class="btn btn-danger" ng-model="radioModel" btn-radio="'Left'" uncheckable>Today</label>
+          <label ng-click="showToday=false; showDay=true; showRange=false; showHour=true" class="btn btn-danger" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Another day</label>
+          <label ng-click="showToday=false; showDay=false; showRange=true; showHour=true" class="btn btn-danger" ng-model="radioModel" btn-radio="'Right'" uncheckable>Range of days</label>
+        </div>
+      </div>
+
+      <div ng-show="showToday" class="col-xs-12">
+        <label for="today">Today</label>
+        <p class="input-group">
+          <input id="today" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="toggleMin" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" disabled/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)" disabled><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div ng-show="showDay" class="col-xs-12">
+        <label for="today">Day</label>
+        <p class="input-group">
+          <input id="today" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="toggleMin" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      
+          <div class="col-xs-12">
+            <div ng-show="showRange">
+              <label for="fromDate">From</label>
+              <p class="input-group">
+                <input id="fromDate" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="toggleMin" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="col-xs-12">
+
+            <div ng-show="showRange" >
+              <label for="toDate">Until</label>
+              <p class="input-group">
+                <input id="toDate" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt2" is-open="opened2" min-date="toggleMin" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled2(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </div>
+          
+          </div>
+          <div ng-show="showHour">
+        <div class="st col-xs-3">
+          <div class="start"><strong>From:</strong></div></div>
+          <div class="col-xs-9">
+            <div class="imgimg "><timepicker id="hourStart" ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+            </div>
+          </div>
+          <div class="st col-xs-3">
+            <div class="start"><strong>Until:</strong></div></div>
+            <div class="col-xs-9">
+              <div class="imgimg "><timepicker id="hourStart" ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-0">
+          <h1 class="text-justify">Percentages</h1>
+          <div  google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+        </div>
+        <div class="continer col-xs-12 col-md-3 ">
+          <div class="row col-xs-12">
+            <h1>References</h1>
+            <div class="col-md-12 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">People</span>
+                  <span class="info-box-number">{{obj.people.total}}</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-12 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Motorcylce"></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Motorcycles</span>
+                  <span class="info-box-number">{{obj.motorcycles.total}}</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+            <div class="col-md-12 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Cars</span>
+                  <span class="info-box-number">{{obj.cars.total}}</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-12 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Buses/Trucks</span>
+                  <span class="info-box-number">{{obj.buses.total}}</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div>
+        </div>
+      </div>
+    </div>
