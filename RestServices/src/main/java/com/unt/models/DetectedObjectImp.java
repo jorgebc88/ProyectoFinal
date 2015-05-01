@@ -1,7 +1,9 @@
 package com.unt.models;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -9,6 +11,8 @@ import java.util.Calendar;
 /**
  * Created by Marco on 18/04/2015.
  */
+@Entity
+@Table(name="DETECTED_OBJECTS")
 public class DetectedObjectImp implements DetectedObject, Serializable{
 
     @Id

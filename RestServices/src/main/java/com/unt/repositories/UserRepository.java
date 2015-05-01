@@ -1,11 +1,12 @@
 package com.unt.repositories;
 
 import com.unt.models.User;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+
 
 /**
  * Created by Marco on 18/04/2015.
@@ -13,5 +14,6 @@ import java.util.List;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User,Long>{
 
-    List<User> findByName(String name);
+    @Query("SELECT u FROM USERS WHERE userName = :name")
+    User findByName(@Param("name")String name);
 }
