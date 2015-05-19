@@ -1,0 +1,238 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'ws',
+1 verbose cli   'node',
+1 verbose cli   'stream-server.js',
+1 verbose cli   '1234' ]
+2 info using npm@2.5.1
+3 info using node@v0.12.0
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose config Skipping project config: C:\Users\JuanPablo/.npmrc. (matches userconfig)
+6 silly cache add args [ 'ws', null ]
+7 verbose cache add spec ws
+8 silly cache add args [ 'node', null ]
+9 verbose cache add spec node
+10 silly cache add args [ 'stream-server.js', null ]
+11 verbose cache add spec stream-server.js
+12 silly cache add args [ '1234', null ]
+13 verbose cache add spec 1234
+14 silly cache add parsed spec { raw: 'ws',
+14 silly cache add   scope: null,
+14 silly cache add   name: 'ws',
+14 silly cache add   rawSpec: '',
+14 silly cache add   spec: '*',
+14 silly cache add   type: 'range' }
+15 verbose addNamed ws@*
+16 silly addNamed semver.valid null
+17 silly addNamed semver.validRange *
+18 silly addNameRange { name: 'ws', range: '*', hasData: false }
+19 silly mapToRegistry name ws
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/ws
+23 verbose addNameRange registry:https://registry.npmjs.org/ws not in flight; fetching
+24 silly cache add parsed spec { raw: 'node',
+24 silly cache add   scope: null,
+24 silly cache add   name: 'node',
+24 silly cache add   rawSpec: '',
+24 silly cache add   spec: '*',
+24 silly cache add   type: 'range' }
+25 verbose addNamed node@*
+26 silly addNamed semver.valid null
+27 silly addNamed semver.validRange *
+28 silly addNameRange { name: 'node', range: '*', hasData: false }
+29 silly mapToRegistry name node
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry uri https://registry.npmjs.org/node
+33 verbose addNameRange registry:https://registry.npmjs.org/node not in flight; fetching
+34 silly cache add parsed spec { raw: 'stream-server.js',
+34 silly cache add   scope: null,
+34 silly cache add   name: null,
+34 silly cache add   rawSpec: 'stream-server.js',
+34 silly cache add   spec: 'C:\\Users\\JuanPablo\\Documents\\Proyecto\\js\\stream-server.js',
+34 silly cache add   type: 'local' }
+35 silly cache add parsed spec { raw: '1234',
+35 silly cache add   scope: null,
+35 silly cache add   name: '1234',
+35 silly cache add   rawSpec: '',
+35 silly cache add   spec: '*',
+35 silly cache add   type: 'range' }
+36 verbose addNamed 1234@*
+37 silly addNamed semver.valid null
+38 silly addNamed semver.validRange *
+39 silly addNameRange { name: '1234', range: '*', hasData: false }
+40 silly mapToRegistry name 1234
+41 silly mapToRegistry using default registry
+42 silly mapToRegistry registry https://registry.npmjs.org/
+43 silly mapToRegistry uri https://registry.npmjs.org/1234
+44 verbose addNameRange registry:https://registry.npmjs.org/1234 not in flight; fetching
+45 silly addLocalTarball shasum (computed) 505c87029cea7e5793d943a0abb1c1a674eca661
+46 verbose addTmpTarball C:\Users\JuanPablo\Documents\Proyecto\js\stream-server.js not in flight; adding
+47 verbose request uri https://registry.npmjs.org/node
+48 verbose request no auth needed
+49 info attempt registry request try #1 at 18:00:31
+50 verbose request id ddaeeb9216e32902
+51 verbose etag "4A754Q2V2HQ65BJAR8DUU8BED"
+52 http request GET https://registry.npmjs.org/node
+53 verbose request uri https://registry.npmjs.org/1234
+54 verbose request no auth needed
+55 info attempt registry request try #1 at 18:00:31
+56 verbose etag "CXEOJL3KHTJXZBNRRGXJJGRKD"
+57 http request GET https://registry.npmjs.org/1234
+58 verbose addTmpTarball validating metadata from C:\Users\JuanPablo\Documents\Proyecto\js\stream-server.js
+59 verbose tar unpack C:\Users\JuanPablo\Documents\Proyecto\js\stream-server.js
+60 verbose tar unpacking to C:\Users\JUANPA~1\AppData\Local\Temp\npm-1244-930555f8\unpack-af01daad9918
+61 verbose gentlyRm vacuuming C:\Users\JUANPA~1\AppData\Local\Temp\npm-1244-930555f8\unpack-af01daad9918
+62 silly gunzTarPerm modes [ '777', '666' ]
+63 verbose request uri https://registry.npmjs.org/ws
+64 verbose request no auth needed
+65 info attempt registry request try #1 at 18:00:31
+66 verbose etag "8LV91IDNIXAYACDZLTKSMUAKZ"
+67 http request GET https://registry.npmjs.org/ws
+68 error not a package C:\Users\JuanPablo\Documents\Proyecto\js\stream-server.js
+69 error addLocal Could not install C:\Users\JuanPablo\Documents\Proyecto\js\stream-server.js
+70 http 304 https://registry.npmjs.org/node
+71 silly get cb [ 304,
+71 silly get   { date: 'Sat, 16 May 2015 21:00:34 GMT',
+71 silly get     via: '1.1 varnish',
+71 silly get     'cache-control': 'max-age=60',
+71 silly get     etag: '"4A754Q2V2HQ65BJAR8DUU8BED"',
+71 silly get     age: '11',
+71 silly get     connection: 'keep-alive',
+71 silly get     'x-served-by': 'cache-jfk1035-JFK',
+71 silly get     'x-cache': 'HIT',
+71 silly get     'x-cache-hits': '1',
+71 silly get     'x-timer': 'S1431810034.490920,VS0,VE0',
+71 silly get     vary: 'Accept' } ]
+72 verbose etag https://registry.npmjs.org/node from cache
+73 verbose get saving node to C:\Users\JuanPablo\AppData\Roaming\npm-cache\registry.npmjs.org\node\.cache.json
+74 silly addNameRange number 2 { name: 'node', range: '*', hasData: true }
+75 silly addNameRange versions [ 'node', [ '0.0.0' ] ]
+76 verbose addNamed node@0.0.0
+77 silly addNamed semver.valid 0.0.0
+78 silly addNamed semver.validRange 0.0.0
+79 warn deprecated node@0.0.0: To update or install node, go to http://nodejs.org/
+80 silly cache afterAdd node@0.0.0
+81 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\node\0.0.0\package\package.json not in flight; writing
+82 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\node\0.0.0\package\package.json written
+83 http 304 https://registry.npmjs.org/1234
+84 silly get cb [ 304,
+84 silly get   { date: 'Sat, 16 May 2015 21:00:34 GMT',
+84 silly get     via: '1.1 varnish',
+84 silly get     'cache-control': 'max-age=60',
+84 silly get     etag: '"CXEOJL3KHTJXZBNRRGXJJGRKD"',
+84 silly get     age: '12',
+84 silly get     connection: 'keep-alive',
+84 silly get     'x-served-by': 'cache-jfk1027-JFK',
+84 silly get     'x-cache': 'HIT',
+84 silly get     'x-cache-hits': '1',
+84 silly get     'x-timer': 'S1431810034.551782,VS0,VE0',
+84 silly get     vary: 'Accept' } ]
+85 verbose etag https://registry.npmjs.org/1234 from cache
+86 verbose get saving 1234 to C:\Users\JuanPablo\AppData\Roaming\npm-cache\registry.npmjs.org\1234\.cache.json
+87 http 304 https://registry.npmjs.org/ws
+88 silly get cb [ 304,
+88 silly get   { date: 'Sat, 16 May 2015 21:00:34 GMT',
+88 silly get     via: '1.1 varnish',
+88 silly get     'cache-control': 'max-age=60',
+88 silly get     etag: '"8LV91IDNIXAYACDZLTKSMUAKZ"',
+88 silly get     age: '25',
+88 silly get     connection: 'keep-alive',
+88 silly get     'x-served-by': 'cache-jfk1023-JFK',
+88 silly get     'x-cache': 'HIT',
+88 silly get     'x-cache-hits': '1',
+88 silly get     'x-timer': 'S1431810034.559284,VS0,VE0',
+88 silly get     vary: 'Accept' } ]
+89 verbose etag https://registry.npmjs.org/ws from cache
+90 verbose get saving ws to C:\Users\JuanPablo\AppData\Roaming\npm-cache\registry.npmjs.org\ws\.cache.json
+91 silly addNameRange number 2 { name: '1234', range: '*', hasData: true }
+92 silly addNameRange versions [ '1234', [ '0.0.1' ] ]
+93 verbose addNamed 1234@0.0.1
+94 silly addNamed semver.valid 0.0.1
+95 silly addNamed semver.validRange 0.0.1
+96 silly addNameRange number 2 { name: 'ws', range: '*', hasData: true }
+97 silly addNameRange versions [ 'ws',
+97 silly addNameRange   [ '0.2.6',
+97 silly addNameRange     '0.2.8',
+97 silly addNameRange     '0.2.9',
+97 silly addNameRange     '0.3.0',
+97 silly addNameRange     '0.3.1',
+97 silly addNameRange     '0.3.2',
+97 silly addNameRange     '0.3.3',
+97 silly addNameRange     '0.3.4',
+97 silly addNameRange     '0.3.4-2',
+97 silly addNameRange     '0.3.5',
+97 silly addNameRange     '0.3.5-2',
+97 silly addNameRange     '0.3.5-3',
+97 silly addNameRange     '0.3.5-4',
+97 silly addNameRange     '0.3.6',
+97 silly addNameRange     '0.3.7',
+97 silly addNameRange     '0.3.8',
+97 silly addNameRange     '0.3.9',
+97 silly addNameRange     '0.4.0',
+97 silly addNameRange     '0.4.1',
+97 silly addNameRange     '0.4.2',
+97 silly addNameRange     '0.4.3',
+97 silly addNameRange     '0.4.5',
+97 silly addNameRange     '0.4.6',
+97 silly addNameRange     '0.4.7',
+97 silly addNameRange     '0.4.8',
+97 silly addNameRange     '0.4.9',
+97 silly addNameRange     '0.4.10',
+97 silly addNameRange     '0.4.11',
+97 silly addNameRange     '0.4.12',
+97 silly addNameRange     '0.4.13',
+97 silly addNameRange     '0.4.14',
+97 silly addNameRange     '0.4.15',
+97 silly addNameRange     '0.4.16',
+97 silly addNameRange     '0.4.17',
+97 silly addNameRange     '0.4.18',
+97 silly addNameRange     '0.4.19',
+97 silly addNameRange     '0.4.20',
+97 silly addNameRange     '0.4.21',
+97 silly addNameRange     '0.4.22',
+97 silly addNameRange     '0.4.23',
+97 silly addNameRange     '0.4.24',
+97 silly addNameRange     '0.4.25',
+97 silly addNameRange     '0.4.27',
+97 silly addNameRange     '0.4.28',
+97 silly addNameRange     '0.4.29',
+97 silly addNameRange     '0.4.30',
+97 silly addNameRange     '0.4.31',
+97 silly addNameRange     '0.4.32',
+97 silly addNameRange     '0.5.0',
+97 silly addNameRange     '0.6.0',
+97 silly addNameRange     '0.6.1',
+97 silly addNameRange     '0.6.2',
+97 silly addNameRange     '0.6.3',
+97 silly addNameRange     '0.6.4',
+97 silly addNameRange     '0.6.5',
+97 silly addNameRange     '0.7.0',
+97 silly addNameRange     '0.7.1',
+97 silly addNameRange     '0.7.2' ] ]
+98 verbose addNamed ws@0.7.2
+99 silly addNamed semver.valid 0.7.2
+100 silly addNamed semver.validRange 0.7.2
+101 silly cache afterAdd 1234@0.0.1
+102 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\1234\0.0.1\package\package.json not in flight; writing
+103 silly cache afterAdd ws@0.7.2
+104 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\ws\0.7.2\package\package.json not in flight; writing
+105 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\1234\0.0.1\package\package.json written
+106 verbose afterAdd C:\Users\JuanPablo\AppData\Roaming\npm-cache\ws\0.7.2\package\package.json written
+107 verbose stack Error: ENOENT, open 'C:\Users\JUANPA~1\AppData\Local\Temp\npm-1244-930555f8\unpack-af01daad9918\package.json'
+107 verbose stack     at Error (native)
+108 verbose cwd C:\Users\JuanPablo\Documents\Proyecto\js
+109 error Windows_NT 6.3.9600
+110 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "ws" "node" "stream-server.js" "1234"
+111 error node v0.12.0
+112 error npm  v2.5.1
+113 error path C:\Users\JUANPA~1\AppData\Local\Temp\npm-1244-930555f8\unpack-af01daad9918\package.json
+114 error code ENOENT
+115 error errno -4058
+116 error enoent ENOENT, open 'C:\Users\JUANPA~1\AppData\Local\Temp\npm-1244-930555f8\unpack-af01daad9918\package.json'
+116 error enoent This is most likely not a problem with npm itself
+116 error enoent and is related to npm not being able to find a file.
+117 verbose exit [ -4058, true ]
