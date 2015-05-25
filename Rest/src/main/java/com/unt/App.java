@@ -1,0 +1,19 @@
+package com.unt;
+
+import com.unt.configuration.AppConfig;
+import com.unt.services.UserServices;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
+/**
+ * Hello world!
+ */
+public class App {
+    public static void main(String[] args) {
+
+        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+        ctx.register(AppConfig.class); // another alternative: ctx.scan("com.unt");
+        ctx.refresh();
+        UserServices userServices = ctx.getBean(UserServices.class);
+        userServices.prueba();
+    }
+}
