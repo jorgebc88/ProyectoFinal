@@ -1,14 +1,21 @@
 package com.unt.models;
 
-import javax.persistence.*;
+
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 
 /**
  * Created by Marco on 18/04/2015.
  */
 @Entity
-@Table(name = "USERS")
-public class User implements Serializable{
+@Table(name = "User")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
@@ -21,14 +28,26 @@ public class User implements Serializable{
     @Column(name = "password")
     private String password;
 
+    @Column(name = "type")
+    private String type;
+
     public Long getUserId() {
         return userId;
     }
 
-    public User(String userName, String password) {
-        super();
+    public User(String userName, String password, String type) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setUserId(Long userId) {

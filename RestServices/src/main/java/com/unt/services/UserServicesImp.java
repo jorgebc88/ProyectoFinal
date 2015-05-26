@@ -18,8 +18,8 @@ public class UserServicesImp implements UserServices {
     UserDAO userDao;
 
     @Override
-    public User addUser(String name, String password) {
-        return this.userDao.addUser(name, password);
+    public User addUser(String name, String password, String type) {
+        return this.userDao.addUser(name, password, type);
     }
 
     @Override

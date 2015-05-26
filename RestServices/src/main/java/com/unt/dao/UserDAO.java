@@ -16,20 +16,20 @@ public class UserDAO {
     @Autowired
     UserRepository userRepository;
 
-    public User addUser(String userName, String password){
-        if(!this.userNameAvailable(userName)){
+    public User addUser(String userName, String password, String type) {
+        if (!this.userNameAvailable(userName)) {
             throw new UserNameUnavailableException();
         }
 
-        User user = new User(userName, password);
+        User user = new User(userName, password, type);
         return this.userRepository.save(user);
     }
 
-    public User getUserByName(String name){
+    public User getUserByName(String name) {
         return userRepository.findByName(name);
     }
 
-    public boolean userNameAvailable(String userName){
+    public boolean userNameAvailable(String userName) {
         return this.userRepository.findByName(userName) == null;
     }
 
