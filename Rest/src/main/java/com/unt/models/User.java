@@ -3,8 +3,8 @@ package com.unt.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Marco on 25/05/2015.
