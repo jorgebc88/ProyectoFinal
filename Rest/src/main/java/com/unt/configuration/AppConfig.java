@@ -1,10 +1,11 @@
 package com.unt.configuration;
 
-import com.unt.services.UserServices;
-import com.unt.services.UserServicesImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import com.unt.services.UserServices;
+import com.unt.services.UserServicesImp;
 
 /**
  * Created by Marco on 25/05/2015.

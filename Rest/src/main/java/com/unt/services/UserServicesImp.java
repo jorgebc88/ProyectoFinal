@@ -1,8 +1,9 @@
 package com.unt.services;
 
-import com.unt.models.User;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
+
+import com.unt.models.User;
 
 /**
  * Created by Marco on 25/05/2015.

@@ -1,8 +1,9 @@
 package com.unt;
 
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
 import com.unt.configuration.AppConfig;
 import com.unt.services.UserServices;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 /**
  * Hello world!
