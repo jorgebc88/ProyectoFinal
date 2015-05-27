@@ -6,10 +6,12 @@ import org.springframework.context.annotation.Configuration;
 
 import com.unt.services.UserServices;
 import com.unt.services.UserServicesImp;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Created by Marco on 25/05/2015.
  */
+@EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.unt")
 public class AppConfig {

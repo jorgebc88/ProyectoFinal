@@ -1,5 +1,6 @@
 package com.unt;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.unt.configuration.AppConfig;
@@ -13,8 +14,7 @@ public class App {
 
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(AppConfig.class); // another alternative: ctx.scan("com.unt");
+        ctx.scan("com.unt");
         ctx.refresh();
-        UserServices userServices = ctx.getBean(UserServices.class);
-        userServices.prueba();
     }
 }
