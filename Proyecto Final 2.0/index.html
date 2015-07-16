@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Proyecto Final">
+  <meta name="keywords" content="">
+  <meta name="author" content="Abuin, Bravo Córdoba, Ciotola">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Proyecto Final</title>
+</head>
+<body ng-app="myApp" ng-controller="indexCtrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" bs-navbar ng-hide="!userConnected.connected">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">Brand</a>
+    </div>
+    <ul class="nav navbar-nav" >
+      <li data-match-route="/$"><a href="#/">Home</a></li>
+      <li data-match-route="/ejemplo1"><a href="#/ejemplo1">Page One</a></li>
+      <li data-match-route="/ejemplo2"><a href="#/ejemplo2" ng-show="userConnected.level==1">Page Two</a></li>
+      <li><button type="button" class="btn btn-default btn-block center-block" ng-click="logout()"><strong>Salir</strong></button></li>
+    </ul>
+  </nav>
+
+  <div ng-view></div>
+
+
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/controllers.js"></script>
+
+</body>
+</html>
