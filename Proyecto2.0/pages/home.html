@@ -1,0 +1,129 @@
+
+
+<header class="headerHome" id="presentation">
+  <div class="container">
+  </div>
+  <div class="imgbc">
+    <div class="container text-center">
+      <h1>¡BIENVENIDOS!</h1>
+      <br><br>
+      <h1>En este sitio web podrá analizar estadísticas correspondientes al tráfico.</h1>
+      <br>
+      <br>
+      <br>
+      <br>
+      <h2>Gracias a esta aplicación usted contará con la posibilidad de discrimar entre tráfico de peatones, motocicletas y/o bicicletas, autos y camiones y/o colectivos.</h2>
+    </div>
+  </div>
+</header>
+<div class="container" id="video">
+  <div class="row videoHome">
+    <article class="articleMain container col-xs-12 col-md-8 form-group">
+      <h1 class="text-left">Camera</h1>
+      <canvas id="videoCanvas" class="videoCanvas">
+        <p>
+          Please use a browser that supports the Canvas Element, like
+          <a href="http://www.google.com/chrome">Chrome</a>,
+          <a href="http://www.mozilla.com/firefox/">Firefox</a>,
+          <a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+        </p>
+      </canvas>
+<!--
+/*
+C:\Users\JuanPablo\Documents>ffmpeg -y -f vfwcap -s 640*480 -r 25 -i 0 out.mpg -f mpeg1video -b 80000k -r 30 http://localhost:8082/secret/640/480*/
+<carousel interval="myInterval">    
+<slide ng-repeat="slide in slides" active="slide.active">
+<img ng-src="{{slide.image}}" style="margin:auto;">
+<div class="carousel-caption">
+<!--<h4>Slide {{$index}}</h4>
+<p>{{slide.text}}</p>
+</div>
+</slide>
+</carousel>       
+</div>   -->
+</article>
+<aside class="asideMain col-xs-12 col-md-4">
+  <h1 class="text-left">Statistics</h1>
+  <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
+      <div class="info-box-content">
+        <span class="info-box-text">People</span>
+        <span class="info-box-number">{{obj.people.total}}</span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+  <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Motorcylce"></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Motorcycles</span>
+        <span class="info-box-number">{{obj.motorcycles.total}}</span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+  <!-- fix for small devices only -->
+  <div class="clearfix visible-sm-block"></div>
+  <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Cars</span>
+        <span class="info-box-number">{{obj.cars.total}}</span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+  <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Buses/Trucks</span>
+        <span class="info-box-number">{{obj.buses.total}}</span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+</aside>
+</div>
+</div>
+<div id="info">
+  <div class="container text-center"><h1>REFERENCES</h1></div>  
+  <br>
+  <br>
+  <div class="container">
+    <div class="form-group col-xs-12" >
+      <a href="#/statistics"><span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
+        <div class="info-box-content">
+          <h2 class="hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> People: <small>You can see others stats of people in this link.</small></h2>
+          <h3 class="visible-xs visible-sm"><span class="glyphicon glyphicon-link"></span> People stats</h3>
+        </div>
+      </div></a>
+    </div>
+    <div class="container">
+      <div class="form-group col-xs-12">
+        <a href="#/statistics"><span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Motorcylce"></span>
+          <div class="info-box-content">
+            <h2 class="hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> Motorcycles: <small>You can see others stats of motorcycles in this link.</small></h2>
+            <h3 class="visible-xs visible-sm"><span class="glyphicon glyphicon-link"></span> Motorcycles stats</h3>
+          </div>
+        </div></a>
+      </div>
+      <div class="container">
+        <div class="form-group col-xs-12">
+          <a href="#/statistics"><span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
+            <div class="info-box-content">
+              <h2 class="hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> Cars: <small>You can see others stats of cars in this link.</small></h2>
+              <h3 class="visible-xs visible-sm"><span class="glyphicon glyphicon-link"></span> Cars stats</h3>
+            </div>
+          </div></a>
+        </div>
+        <div class="container">
+          <div class="form-group col-xs-12">
+            <a href="#/statistics" ng-click=""><span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
+              <div class="info-box-content">
+                <h2 class="hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> Buses/Trucks: <small>You can see others stats of buses or turcks in this link.</small></h2>
+                <h3 class="visible-xs visible-sm"><span class="glyphicon glyphicon-link"></span> Buses/Trucks stats</h3>
+              </div>
+            </div></a>
+          </div>
+          <br>
+        </div>

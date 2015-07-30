@@ -1,0 +1,177 @@
+<div id="statistics" class="">
+  <div class="col-xs-12">
+    <div class="row">
+      <!--COLLAPSE-->
+      <div class="container">
+        <button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">Advanced Search <span class="glyphicon glyphicon-search"></span></button>
+        <div collapse="isCollapsed">
+          <div class="well well-lg">
+            <div class="row">
+              <div class="col-xs-12">
+                <h4><strong>Select the search type:</strong></h4>
+              </div>
+              <form class="form-inline form-group container">
+                <div class="form-group">
+                  <button ng-click="showToday=true; showDay=false; showRange=false" class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'" uncheckable>Today</button>
+                </div>
+                <div class="form-group">
+                  <button ng-click="showToday=false; showDay=true; showRange=false" class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Other day</button>
+                </div>
+                <div class="form-group">
+                  <button ng-click="showToday=false; showDay=false; showRange=true" class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'" uncheckable>Range of date</button>
+                </div>
+              </form>
+            </div>
+            <hr>
+            <div>
+              <form action="" class="form-inline">
+                <div ng-show="showToday" class="form-group">
+                  <label class="control-label"><span class="glyphicon glyphicon-calendar"></span> Date </label>
+                  <input type="text" class="form-control" ng-model="Today" name="date" bs-datepicker disabled>
+                </div>
+                <div ng-show="showDay"class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+                  <label class="control-label"><span class="glyphicon glyphicon-calendar"></span> Date </label>
+                  <input type="text" class="form-control" ng-model="selectedDate" name="date" data-max-date="{{maxDate}}" placeholder="Select" bs-datepicker>
+                </div>
+                <div ng-show="showRange" class="form-group">
+                  <label class="control-label"><span class="glyphicon glyphicon-calendar"></span> <span class="glyphicon glyphicon-resize-horizontal"></span> <span class="glyphicon glyphicon-calendar"></span> Date range </label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" ng-model="fromDate"  data-max-date="{{maxDate}}" placeholder="From" bs-datepicker>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" ng-model="untilDate"  data-min-date="{{fromDate}}" data-max-date="{{maxDate}}" placeholder="Until" bs-datepicker>
+                  </div>
+                </div>
+                <!-- Time picker with arrows example -->
+                <div class="form-group">
+                  <label class="control-label"><span class="glyphicon glyphicon-time"></span> From:</label>
+                  <input type="text" class="form-control" size="8" ng-model="fromTime" name="time" bs-timepicker
+                  data-time-format="HH:mm a" data-length="1" data-minute-step="1" data-arrow-behavior="picker">
+                </div>
+                <div class="form-group">
+                  <label class="control-label"><span class="glyphicon glyphicon-time"></span> To:</label>
+                  <input type="text" class="form-control" size="8" ng-model="toTime" name="time" bs-timepicker
+                  data-time-format="HH:mm a" data-length="1" data-minute-step="1" data-arrow-behavior="picker">
+                </div>
+                <hr>
+              </form>
+              <button class="btn btn-default" type="submit">Search</button>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+    <h1 class="text-center">Stats since <strong>10-Apr-2015</strong> until <strong>15-Apr-2015</strong></h1>
+    <h3 class="text-center">(<strong>12:00 pm </strong>-<strong> 15:00 pm</strong>)</h3>
+    <div class="row">
+      <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-2">
+        <h2 class="text-justify">Percentages</h2>
+        <div  google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+      <div class="continer col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-4">
+        <div class="row col-xs-12">
+          <h2>References</h2>
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
+              <div class="info-box-content">
+                <span class="info-box-text">People</span>
+                <span class="info-box-number">{{obj.people.total}}</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+          </div><!-- /.col -->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Motorcylce"></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Motorcycles</span>
+                <span class="info-box-number">{{obj.motorcycles.total}}</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+          </div><!-- /.col -->
+          <!-- fix for small devices only -->
+          <div class="clearfix visible-sm-block"></div>
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Cars</span>
+                <span class="info-box-number">{{obj.cars.total}}</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+          </div><!-- /.col -->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Buses/Trucks</span>
+                <span class="info-box-number">{{obj.buses.total}}</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+          </div><!-- /.col -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <tabset justified="true">
+    <tab heading="All">
+      <div class="Back form-group"><br>
+        <div class="container">
+          <img class="imgIcon" src="img/all.png" alt="All">
+          <strong> All</strong>
+          <div class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs" google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs" google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="People">
+      <div class="Back form-group"><br>
+        <div class="container">
+          <img class="imgIcon" src="img/man23.png" alt="People">
+          <strong> People</strong>
+          <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Motorcycles">
+      <div class="Back form-group"><br>
+        <div class="container">
+          <img class="imgIcon" src="img/vintage15.png" alt="Motorcylce">
+          <strong> Motorcylce</strong>
+          <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Cars">
+      <div class="Back form-group"><br>
+        <div class="container">
+          <img class="imgIcon" src="img/car95.png" alt="Cars">
+          <strong> Cars</strong>
+          <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Buses/Trucks">
+      <div class="Back form-group"><br>
+        <div class="container">
+          <img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
+          <strong> Buses/Trucks</strong>
+          <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
+          <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
+        </div>
+      </div>
+    </tab>
+  </tabset> 
+</div>
+
+
+
+

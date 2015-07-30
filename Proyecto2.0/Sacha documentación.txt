@@ -1,0 +1,30 @@
+************************NOTAS*******************************
+1)Iniciar servidores (http, Tomcat, Streaming)
+	-.../tomcat/bin> catalina.bat start (puerto 8080)
+	-http-server (puerto 8081)
+2)Modificar IP en controlador loginCtrl por IP del servidor Tomcat.
+3)Las instalaciones de módulos, scripts, stylesheets, etc a través de bower.
+************************************************************
+1) Modulos Angular:
+	*ngRoute
+	*ngResource
+	*ngRoute
+	*mgcrea.ngStrap
+	*ngAnimate
+	*ngSanitize
+2)Stylesheet:
+	*bootstrap
+	*angular-motion
+************************************************************
+************************************************************
+LOGIN:
+	agregar en run las rutas a las q no puedan acceder determinados usuarios
+	utiliza cookies
+	al cerrar sesion estas cookies se eliminan, de la unica forma en q se eliminan
+	se usan los servicios de $location $cookieStore 
+	se usan promise para q se resuelva cuando el servidor responda
+	existen dos tipos de usuarios 1 y 2 (1 admin, 2 invitado)
+	para mostrar o no algunos elementos usar el nivel del usuario en el ng-show (ng-show = userConnected.level==1)
+	tener en cuenta que es necesario utilizar el servicio para ver q usuario esta conectado, sino al actualizar se pierde el usuario
+	Remember me funcionando. guarda user y pass en una cookie. Al iniciar al login controla si existe datos en esa variable.
+	Boton logout se conecta al servidor además de elminar la sesion.
