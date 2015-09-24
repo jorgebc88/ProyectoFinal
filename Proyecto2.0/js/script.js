@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['app.controllers','ngRoute','ngResource','ngCookies']);
+var app = angular.module('myApp', ['app.controllers','app.services','app.directives','ngRoute','ngResource','ngCookies']);
 app.run(['$rootScope', '$location','$cookieStore',function($rootScope, $location,$cookieStore){
   $rootScope.$on('$routeChangeStart',function(event, next, current){
     if($cookieStore.get('connected') == false || $cookieStore.get('connected') == null ){
@@ -15,7 +15,12 @@ app.run(['$rootScope', '$location','$cookieStore',function($rootScope, $location
     }
   })
 }]);
-
+app.config(function($datepickerProvider) {
+  angular.extend($datepickerProvider.defaults, {
+    dateFormat: 'dd/MM/yyyy',
+    startWeek: 1
+  });
+});
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/', {
@@ -30,6 +35,10 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'statisticsCtrl',
     templateUrl: 'pages/statistics.html'
   })
+  .when('/stats', {
+    controller: 'statisticsCtrl',
+    templateUrl: 'pages/stats.html'
+  })
   .when('/admin', {
     controller: 'adminCtrl',
     templateUrl: 'pages/admin.html'
@@ -38,3 +47,4 @@ app.config(['$routeProvider', function($routeProvider) {
     redirectTo: '/'
   });
 }]);
+

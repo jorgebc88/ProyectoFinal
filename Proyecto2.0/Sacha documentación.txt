@@ -2,6 +2,9 @@
 1)Iniciar servidores (http, Tomcat, Streaming)
 	-.../tomcat/bin> catalina.bat start (puerto 8080)
 	-http-server (puerto 8081)
+	-node stream-server.js yourpassword
+	-C:\Users\JuanPablo\Documents>ffmpeg -y -f vfwcap -s 640*480 -r 25 -i 0 out.mpg -f mpeg1video -b 80000k -r 30 http://localhost:8082/secret/640/480/
+	-java -jar Random.jar (sachaapp)
 2)Modificar IP en controlador loginCtrl por IP del servidor Tomcat.
 3)Las instalaciones de módulos, scripts, stylesheets, etc a través de bower.
 ************************************************************

@@ -6,7 +6,13 @@ html{
 a:hover{
   text-decoration: none !important;
 }
+a:focus{
+  outline: none !important;
+}
 /*************************OTHER************************************/
+.aside {
+  background-color: #222 !important;
+}
 .modal-footer {
   background-color: #F2F2F2;
   font-weight: bold;
@@ -323,7 +329,8 @@ a:hover{
 /**************************************INDEX*******************************************/
 .background{
   background: #F2F2F2;
-}/*
+}
+/*
 .navbar-nav>li>a:hover{
 background-color: #333 !important;
 }
@@ -457,6 +464,12 @@ background-color: #000;
   width: 100%;
   height: auto;
 }
+#stats{
+  padding-top: 10rem;
+  background: #F2F2F2;
+  width: 100%;
+  height: auto;
+}
 .st{
   display: table !important;
   height: 101.111px !important;
@@ -477,7 +490,6 @@ background-color: #000;
 .pBack{
   background: #00c0ef;
   color:#000;
-
 }
 .mBack{
   background: #dd4b39;
@@ -487,12 +499,10 @@ background-color: #000;
 .cBack{
   background: #00a65a;
   color:#000;
-
 }
 .bBack{
   background: #f39c12;
   color:#000;
-
 }
 
 /**********************************END STATICS*******************************************/

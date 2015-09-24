@@ -1,12 +1,31 @@
 html{
   position: relative;
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  background-color: #222;
 }
 a:hover{
   text-decoration: none !important;
 }
 /*************************OTHER************************************/
-
+.modal-footer {
+  background-color: #F2F2F2;
+  font-weight: bold;
+  border-radius: 0px 0px 10px 10px;
+}
+.modal-header {
+  border-radius: 10px 10px 0px 0px;
+  background-color: #A94442;
+  color: #fff;
+}
+.modal-content {
+  border-radius: 15px;
+}
+.modal-body {
+  border-radius: 0px 0px 10px 10px;
+  background-color: #F2F2F2;
+  color: #A94442;
+  font-weight: bold;
+}
 .info-box {
   display: block;
   min-height: 90px;
@@ -276,19 +295,19 @@ a:hover{
   background: #222222;
 }
 .signIn{
-  background: #FF7F00;
+  background: #101010;
   color: #FFF;
   border-radius: 10px 10px 0px 0px;
   height: 8rem;
   /*box-shadow: 0px 0px 10px #fff;*/
 }
 .formLog{
-  background: #EAEAEC;
+  background: #F2F2F2;
   /*box-shadow: 0px 0px 10px #fff;*/
 }
 .signMe{
   height: 8rem;
-  background: #FF7F00;
+  background: #101010;
   border-radius: 0px 0px 10px 10px;
   /*box-shadow: 0px 0px 10px #fff;*/
 }
@@ -297,7 +316,7 @@ a:hover{
 }
 .whiteLine{
   height: 0.4rem;
-  background: #D46803;
+  background: #9D9D9D;
   /*box-shadow: 0px 0px 10px #fff;*/
 }
 /**********************************END LOGIN*******************************************/
@@ -360,11 +379,6 @@ background-color: #000 !important;
 .imgbc{
   color: #FFF;
 }
-.articleMain h1{
-  color:#333;
-  margin-top: 0px;
-  padding-left: 15px;
-}
 #video{
   padding-top: 10rem;
   padding-bottom: 10rem;
@@ -372,16 +386,17 @@ background-color: #000 !important;
 }
 .videoHome{
   padding-top: 15px;
+
 }
 
 .asideMain{
-  color: #000;
+  color: #333;
   padding-top: 0px;
 }
-.asideMain h1{
+.h1{
   color:#333;
   margin-top: 0px;
-  padding-left: 15px;
+  padding-left: 15px;*/
 }
 .asideMain a{
   color: #000;
@@ -430,8 +445,9 @@ background-color: #FF7F00 !important;
 internal size. */
 width: 100%;
 height: auto;
-padding-left: 15px;
-padding-right: 15px;
+margin-left: 15px;
+margin-right: 15px;
+background-color: #000;
 }
 /**********************************END HOME*******************************************/
 /**********************************STATICS*******************************************/

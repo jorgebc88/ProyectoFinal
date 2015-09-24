@@ -1,0 +1,34 @@
+WEB
+*usuarios:
+	-alta:
+			->usario,contraseña,nivel
+			<-error,OK
+	-baja:
+			->usario,contraseña,nivel
+			<-error,OK
+	-modificar:
+			->usario,contraseña,nivel
+			<-error,OK
+	-login:
+			->usario,contraseña
+			<-error,OK
+	-logout:
+			->
+			<-error,OK
+	-lista de usuarios:
+			->
+			<-usuarios, contraseñas, nivles
+	
+*objetos detectados:
+	-cantidad total:
+			->fecha inicio, fecha fin (incluyendo hora), tipo de objeto, direccion
+			<- cantidad total para arriba, cantidad total para abajo.
+	-borrar bd:
+			-> fecha inicio, fecha fin
+			<-error, OK
+	
+DESKTOP:
+*objetos detectados:
+	-alta:
+			->tipo, direccion 
+			<-error,OK
