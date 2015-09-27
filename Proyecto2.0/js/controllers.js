@@ -33,7 +33,7 @@ $scope.showModal = function() {
   myOtherModal.$promise.then(myOtherModal.show);
 };
 $scope.logout = function(){
-$http.get('http://localhost:8080/FinalProject/user/logout');//http://192.168.2.108:8080
+$http.get('http://192.168.2.120:8080/FinalProject/user/logout');//http://192.168.2.108:8080
 $scope.userConnected = {'name': "", 'level': "", 'connected':""};
 $cookieStore.remove('connected');
 $cookieStore.remove('level');
@@ -63,7 +63,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   $scope.login = function (){
     var userName = $scope.userName;
     var password = $scope.password;
-    var usr = $http.post('http://localhost:8080/FinalProject/user/login', {"userName": userName, "password": password})
+    var usr = $http.post('http://192.168.2.120:8080/FinalProject/user/login', {"userName": userName, "password": password})
     .then(function(response) {
       session.resolve(response.data);
     },function(response) {
@@ -137,23 +137,220 @@ for (var i=0; i<1; i++) {
 }
 }]).value('duScrollOffset', 30);
 
-app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', 'StreamHandler', function ($scope,$http,Oboe,$location,StreamHandler) {  
-
-        if (typeof(EventSource) !== "undefined") {
-            // Yes! Server-sent events support!
-            var source = new EventSource('http://localhost:8080/FinalProject/detectedObject/serverSentEvents');
-
-            source.onmessage = function (event) {
-                $scope.openListingsReport = JSON.parse(event.data);
-                $scope.$apply();
-                console.log($scope.openListingsReport);
-            };
-        
-    } else {
-        // Sorry! No server-sent events support..
-        alert('SSE not supported by browser.');
-    }
-
+app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function ($scope,$http,Oboe,$location) { 
+  $scope.flag = 0; 
+  $scope.objectDetected = [];
+  $scope.chart = {};
+  $scope.chart.type = "PieChart";
+  $scope.chart.cssStyle = "height:500px; width:auto;";
+  $scope.chart.formatters = {};
+  $scope.clickAll = function () {
+    $scope.flag = 0;
+    $scope.chart.data = [
+    ['Object', 'Quantity'],
+    ['People', $scope.person],
+    ['Bikes', $scope.bike],
+    ['Cars', $scope.car],
+    ['Buses/Trucks', $scope.bus],
+    ];
+    $scope.chart.options = {
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "backgroundColor":"transparent",
+      "vAxis": {
+        "title": "Sales unit", "gridlines": {"count": 6}
+      },
+      "hAxis": {
+        "title": "Date"
+      },
+      "pieHole": 0.4,
+      "slices": {
+        0: { color: '#00c0ef' },
+        1: { color: '#DD4B39' },
+        2: { color: '#00A65A' },
+        3: { color: '#F39C12' }
+      },
+      "legend":"none",
+      "chartArea":{"width":'90%',"height":'90%'}
+    };
+  };
+  $scope.clickAll();
+  $scope.clickPerson = function () {
+    $scope.flag = 1;
+    $scope.chart.data = [
+    ['Object', 'Quantity'],
+    ['People-Down', $scope.personDown],
+    ['People-Up', $scope.personUp],
+    ];
+    $scope.chart.options = {
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "backgroundColor":"transparent",
+      "vAxis": {
+        "title": "Sales unit", "gridlines": {"count": 6}
+      },
+      "hAxis": {
+        "title": "Date"
+      },
+      "pieHole": 0.4,
+      "slices": {
+        0: { color: '#00c0ef' },
+        1: { color: '#0295B9' },
+      },
+      "legend":"none",
+      "chartArea":{"width":'90%',"height":'90%'}
+    };
+  };
+  $scope.clickBike = function () {
+    $scope.flag = 2;
+    $scope.chart.data = [
+    ['Object', 'Quantity'],
+    ['Bikes-Down', $scope.bikeDown],
+    ['Bikes-Up', $scope.bikeUp],
+    ];
+    $scope.chart.options = {
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "backgroundColor":"transparent",
+      "vAxis": {
+        "title": "Sales unit", "gridlines": {"count": 6}
+      },
+      "hAxis": {
+        "title": "Date"
+      },
+      "pieHole": 0.4,
+      "slices": {
+        0: { color: '#DD4B39' },
+        1: { color: '#B14336' },
+      },
+      "legend":"none",
+      "chartArea":{"width":'90%',"height":'90%'}
+    };
+  };
+  $scope.clickCar = function () {
+    $scope.flag = 3;
+    $scope.chart.data = [
+    ['Object', 'Quantity'],
+    ['Cars-Down', $scope.carDown],
+    ['Cars-Up', $scope.carUp],
+    ];
+    $scope.chart.options = {
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "backgroundColor":"transparent",
+      "vAxis": {
+        "title": "Sales unit", "gridlines": {"count": 6}
+      },
+      "hAxis": {
+        "title": "Date"
+      },
+      "pieHole": 0.4,
+      "slices": {
+        0: { color: '#00A65A' },
+        1: { color: '#045F35' },
+      },
+      "legend":"none",
+      "chartArea":{"width":'90%',"height":'90%'}
+    };
+  };
+  $scope.clickBus = function () {
+    $scope.flag = 4;
+    $scope.chart.data = [
+    ['Object', 'Quantity'],
+    ['Buses/Trucks-Down', $scope.busDown],
+    ['Buses/Trucks-Up', $scope.busUp],
+    ];
+    $scope.chart.options = {
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "backgroundColor":"transparent",
+      "vAxis": {
+        "title": "Sales unit", "gridlines": {"count": 6}
+      },
+      "hAxis": {
+        "title": "Date"
+      },
+      "pieHole": 0.4,
+      "slices": {
+        0: { color: '#F39C12' },
+        1: { color: '#C67F0F' },
+      },
+      "legend":"none",
+      "chartArea":{"width":'90%',"height":'90%'}
+    };
+  };
+  $scope.sse = $.SSE('http://192.168.2.120:8080/FinalProject/detectedObject/serverSentEvents', {
+    onOpen: function(e){  
+    },
+    onEnd: function(e){ 
+    },
+    onError: function(e){ 
+      console.log("Could not connect"); 
+    },
+    onMessage: function(e){ 
+      $scope.objectDetected = angular.fromJson(e.data);
+      $scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
+      $scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
+      $scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
+      $scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
+      $scope.personDown = $scope.objectDetected.detectedObject[0].person;
+      $scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
+      $scope.carDown = $scope.objectDetected.detectedObject[0].car;
+      $scope.busDown = $scope.objectDetected.detectedObject[0].bus;
+      $scope.personUp = $scope.objectDetected.detectedObject[1].person;
+      $scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
+      $scope.carUp = $scope.objectDetected.detectedObject[1].car;
+      $scope.busUp = $scope.objectDetected.detectedObject[1].bus;
+      if ($location.path() != "/statistics"){
+        $scope.sse.stop();
+      }
+      $scope.$apply(function () {
+        if($scope.flag == 0){
+          $scope.chart.data = [
+          ['Object', 'Quantity'],
+          ['People', $scope.person],
+          ['Bikes', $scope.bike],
+          ['Cars', $scope.car],
+          ['Buses/Trucks', $scope.bus],
+          ];
+        }
+        else if($scope.flag == 1){
+          $scope.chart.data = [
+          ['Object', 'Quantity'],
+          ['People-Down', $scope.personDown],
+          ['People-Up', $scope.personUp],
+          ];
+        }
+        else if($scope.flag == 2){
+          $scope.chart.data = [
+          ['Object', 'Quantity'],
+          ['Bikes-Down', $scope.bikeDown],
+          ['Bikes-Up', $scope.bikeUp],
+          ];
+        }
+        else if($scope.flag == 3){
+          $scope.chart.data = [
+          ['Object', 'Quantity'],
+          ['Cars-Down', $scope.carDown],
+          ['Cars-Up', $scope.carUp],
+          ];
+        }
+        else if($scope.flag == 4){
+          $scope.chart.data = [
+          ['Object', 'Quantity'],
+          ['Buses/Trucks-Down', $scope.busDown],
+          ['Buses/Trucks-Up', $scope.busUp],
+          ];
+        }        
+      });
+}    
+});
+$scope.sse.start();
 $scope.tabs = [
 {title:'Home', page: 'pages/template1.html',content: 'Raw denim you probably haven\'t heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.'},
 {title:'Profile', page: 'pages/template2.html',content: 'Food truck fixie locavore, accusamus mcsweeney\'s marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.'},
@@ -171,7 +368,6 @@ $scope.radioModel = 'Left';
 $scope.showToday= true; 
 $scope.showHour=true;
 $scope.tab='all';
-
 $scope.today = function() {
   $scope.dt = new Date();
   $scope.dt2 = new Date();
@@ -228,66 +424,6 @@ $scope.changed = function () {
 $scope.clear = function() {
   $scope.mytime = null;
 };
-$scope.people = [];
-$scope.bike = [];
-$scope.car = [];
-$scope.bus = [];
-$http.get('http://localhost:8080/FinalProject/detectedObject/requestDetectedObject')
-.then(function(response) {
-  $scope.objectDetected = response.data;
-  angular.forEach($scope.objectDetected, function(value, key) {
-    if(value.objectType == "Bus"){
-    $scope.bus.push(value); 
-  }
-  else if(value.objectType == "Bike"){
-    $scope.bike.push(value);
-  }
-  else if(value.objectType == "Car"){
-    $scope.car.push(value);
-  }
-  else if(value.objectType == "People"){
-    $scope.people.push(value);
-  }
-});
-    var chart1 = {};
-  chart1.type = "PieChart";
-  chart1.cssStyle = "height:400px; width:auto;";
-  chart1.data = [
-  ['Object', 'Quantity'],
-  ['People', $scope.people.length],
-  ['Motorcylces', $scope.bike.length],
-  ['Cars', $scope.car.length],
-  ['Buses/Trucks', $scope.bus.length],
-  ];
-  chart1.options = {
-    "isStacked": "true",
-    "fill": 20,
-    "displayExactValues": true,
-    "backgroundColor":"transparent",
-    "vAxis": {
-      "title": "Sales unit", "gridlines": {"count": 6}
-    },
-    "hAxis": {
-      "title": "Date"
-    },
-    "pieHole": 0.4,
-    "slices": {
-      0: { color: '#00c0ef' },
-      1: { color: '#DD4B39' },
-      2: { color: '#00A65A' },
-      3: { color: '#F39C12' }
-    },
-    "legend":"none",
-    "chartArea":{"width":'90%',"height":'90%'}
-  };
-  chart1.formatters = {};
-  $scope.chart = chart1;
-
-
-  });
- 
- 
-
 /*****people******/
 $scope.chartObject = {
   "type": "ColumnChart",
@@ -581,7 +717,7 @@ app.controller('adminCtrl',[ '$scope', function ($scope) {
       }
     }
     if( index === -1 ) {
-      alert( "Something gone wrong" );
+      alert("Something gone wrong");
     }
     $scope.Users.Users.splice( index, 1 );    
   };

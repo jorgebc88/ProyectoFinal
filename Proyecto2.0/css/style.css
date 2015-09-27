@@ -504,7 +504,26 @@ background-color: #000;
   background: #f39c12;
   color:#000;
 }
-
+.linkBlack a{
+  color : #333;
+  text-decoration: none;
+}
+.linkBlack a:visited{
+  color : #333;
+  text-decoration: none;
+}
+.linkBlack a:link{
+  color : #000;
+  text-decoration: none;
+}
+.linkBlack a:active{
+  color : #000;
+  text-decoration: none;
+}
+.linkBlack a:hover{
+  color : #000;
+  text-decoration: none;
+}
 /**********************************END STATICS*******************************************/
 /**********************************INFO*******************************************/
 
