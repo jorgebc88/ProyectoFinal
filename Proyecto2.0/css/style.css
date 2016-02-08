@@ -436,6 +436,10 @@ background-color: #FF7F00 !important;
   width: 40px;
   height: 40px;
 }
+.imgAboutUs{
+  width: 150px;
+  height: 150px;
+}
 .upDown{
   vertical-align: text-bottom;
   font-weight: bold;
@@ -564,5 +568,11 @@ background-color: #000;
 
     margin-left: 0px;
     margin-right: 0px;
+  }
+  .text-center-xs{
+    text-align: center;
+  }
+  .aca {
+    margin-top: 10px !important;
   }
 }
