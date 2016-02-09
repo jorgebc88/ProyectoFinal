@@ -33,7 +33,7 @@ $scope.showModal = function() {
   myOtherModal.$promise.then(myOtherModal.show);
 };
 $scope.logout = function(){
-$http.get('http://192.168.2.120:8080/FinalProject/user/logout');//http://192.168.2.108:8080
+$http.get('http://localhost:8080/FinalProject/user/logout');//http://192.168.2.108:8080
 $scope.userConnected = {'name': "", 'level': "", 'connected':""};
 $cookieStore.remove('connected');
 $cookieStore.remove('level');
@@ -63,7 +63,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   $scope.login = function (){
     var userName = $scope.userName;
     var password = $scope.password;
-    var usr = $http.post('http://192.168.2.120:8080/FinalProject/user/login', {"userName": userName, "password": password})
+    var usr = $http.post('http://localhost:8080/FinalProject/user/login', {"userName": userName, "password": password})
     .then(function(response) {
       session.resolve(response.data);
     },function(response) {
@@ -101,7 +101,38 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   };
 }]);
 
-app.controller('homeCtrl',['$scope', '$document', function ($scope, $document) {
+app.controller('homeCtrl',['$scope', '$document', '$http', '$location', function ($scope, $document, $http, $location) {
+
+$scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
+    onOpen: function(e){  
+    },
+    onEnd: function(e){ 
+    },
+    onError: function(e){ 
+      console.log("Could not connect"); 
+    },
+    onMessage: function(e){ 
+      $scope.objectDetected = angular.fromJson(e.data);
+      //$scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
+      $scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
+      $scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
+      $scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
+      //$scope.personDown = $scope.objectDetected.detectedObject[0].person;
+      $scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
+      $scope.carDown = $scope.objectDetected.detectedObject[0].car;
+      $scope.busDown = $scope.objectDetected.detectedObject[0].bus;
+      //$scope.personUp = $scope.objectDetected.detectedObject[1].person;
+      $scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
+      $scope.carUp = $scope.objectDetected.detectedObject[1].car;
+      $scope.busUp = $scope.objectDetected.detectedObject[1].bus;
+      if ($location.path() != "/home"){
+        $scope.sse.stop();
+      }
+      $scope.$apply(function () {
+      });
+}    
+});
+$scope.sse.start();
   var canvas = document.getElementById('videoCanvas');
   var ctx = canvas.getContext('2d');
   ctx.fillStyle = '#444';
@@ -114,12 +145,6 @@ $scope.parts = [
 {name: "Video", link: "video"},
 {name: "References", link: "info"}
 ];
-$scope.obj = {
-  'people':{total:'150', totalRight:'127', totalLeft:'23'},
-  'motorcycles':{total:'200', totalRight:'95', totalLeft:'105'},
-  'cars':{total:'125', totalRight:'100', totalLeft:'25'},
-  'buses':{total:'40', totalRight:'1', totalLeft:'39'}
-};
 $scope.myInterval = 5000;
 var slides = $scope.slides = [];
 $scope.addSlide = function() {
@@ -284,7 +309,7 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
       "chartArea":{"width":'90%',"height":'90%'}
     };
   };
-  $scope.sse = $.SSE('http://192.168.2.120:8080/FinalProject/detectedObject/serverSentEvents', {
+  $scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
     onOpen: function(e){  
     },
     onEnd: function(e){ 

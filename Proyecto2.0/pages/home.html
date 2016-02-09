@@ -3,18 +3,17 @@
   </div>
   <div class="imgbc">
     <div class="container text-center">
-      <h1>¡BIENVENIDOS!</h1>
-      <br><br>
-      <h1>En este sitio web podrá analizar estadísticas correspondientes al tráfico.</h1>
+      <h1>¡WELCOME!</h1>
+      <br>
+      <br>
+      <h1>On this website you will be able to analyze the statistics regarding traffic.</h1>
       <br>
       <br>
       <br>
-      <br>
-      <h2>Gracias a esta aplicación usted contará con la posibilidad de discrimar entre tráfico de peatones, motos y bicicletas, camiones y colectivos o autos.</h2>
+      <h2>Using this application you will have the chance to distinguish between the differents kind of elements prensent in vehicular traffic: motorbikes, cars and trucks.</h2>
     </div>
   </div>
 </header>
-
 <div class="container" id="video">
   <div class="row videoHome">
     <article class="articleMain container col-xs-12 col-md-8 form-group">
@@ -27,66 +26,49 @@
           <a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
         </p>
       </canvas>
-<!--
-/*
-C:\Users\JuanPablo\Documents>ffmpeg -y -f vfwcap -s 640*480 -r 25 -i 0 out.mpg -f mpeg1video -b 80000k -r 30 http://localhost:8082/secret/640/480/
-<carousel interval="myInterval">    
-<slide ng-repeat="slide in slides" active="slide.active">
-<img ng-src="{{slide.image}}" style="margin:auto;">
-<div class="carousel-caption">
-<!--<h4>Slide {{$index}}</h4>
-<p>{{slide.text}}</p>
+    </article>
+    <aside class="asideMain col-xs-12 col-md-4">
+      <h1 class="text-left">Statistics</h1>
+      <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-gray"><img class="imgIcon" src="img/all.png" alt="All"></span>
+          <div class="info-box-content">
+            <span class="info-box-text">All</span>
+            <span class="info-box-number">{{bike + car + bus}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Bikes"></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Bikes</span>
+            <span class="info-box-number">{{bike}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix visible-sm-block"></div>
+      <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Cars</span>
+            <span class="info-box-number">{{car}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Buses/Trucks</span>
+            <span class="info-box-number">{{bus}}</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
 </div>
-</slide>
-</carousel>       
-</div>   -->
-</article>
-
-<aside class="asideMain col-xs-12 col-md-4">
-  <h1 class="text-left">Statistics</h1>
-  <div class="col-md-12 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
-      <div class="info-box-content">
-        <span class="info-box-text">People</span>
-        <span class="info-box-number">{{obj.people.total}}</span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <div class="col-md-12 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Bikes"></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Bikes</span>
-        <span class="info-box-number">{{obj.motorcycles.total}}</span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <!-- fix for small devices only -->
-  <div class="clearfix visible-sm-block"></div>
-  <div class="col-md-12 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Cars</span>
-        <span class="info-box-number">{{obj.cars.total}}</span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <div class="col-md-12 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Buses/Trucks</span>
-        <span class="info-box-number">{{obj.buses.total}}</span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-</aside>
-
-</div>
-</div>
-
 <div id="info">
   <div class="container text-center"><h1>ABOUT US</h1></div>  
   <br>
