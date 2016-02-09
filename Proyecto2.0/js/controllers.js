@@ -103,7 +103,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
 
 app.controller('homeCtrl',['$scope', '$document', '$http', '$location', function ($scope, $document, $http, $location) {
 
-$scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
+  $scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
     onOpen: function(e){  
     },
     onEnd: function(e){ 
@@ -113,30 +113,30 @@ $scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSent
     },
     onMessage: function(e){ 
       $scope.objectDetected = angular.fromJson(e.data);
-      //$scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
-      $scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
-      $scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
-      $scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
-      //$scope.personDown = $scope.objectDetected.detectedObject[0].person;
-      $scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
-      $scope.carDown = $scope.objectDetected.detectedObject[0].car;
-      $scope.busDown = $scope.objectDetected.detectedObject[0].bus;
-      //$scope.personUp = $scope.objectDetected.detectedObject[1].person;
-      $scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
-      $scope.carUp = $scope.objectDetected.detectedObject[1].car;
-      $scope.busUp = $scope.objectDetected.detectedObject[1].bus;
-      if ($location.path() != "/home"){
-        $scope.sse.stop();
-      }
-      $scope.$apply(function () {
-      });
+//$scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
+$scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
+$scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
+$scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
+//$scope.personDown = $scope.objectDetected.detectedObject[0].person;
+$scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
+$scope.carDown = $scope.objectDetected.detectedObject[0].car;
+$scope.busDown = $scope.objectDetected.detectedObject[0].bus;
+//$scope.personUp = $scope.objectDetected.detectedObject[1].person;
+$scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
+$scope.carUp = $scope.objectDetected.detectedObject[1].car;
+$scope.busUp = $scope.objectDetected.detectedObject[1].bus;
+if ($location.path() != "/home"){
+  $scope.sse.stop();
+}
+$scope.$apply(function () {
+});
 }    
 });
 $scope.sse.start();
-  var canvas = document.getElementById('videoCanvas');
-  var ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#444';
-  ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+var canvas = document.getElementById('videoCanvas');
+var ctx = canvas.getContext('2d');
+ctx.fillStyle = '#444';
+ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 // Setup the WebSocket connection and start the player
 var client = new WebSocket( 'ws://localhost:8084/' );
 var player = new jsmpeg(client, {canvas:canvas});
@@ -333,8 +333,8 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
           ];
         }        
       });
-}    
-});
+    }    
+  });
 $scope.sse.start();
 $scope.tabs = [
 {title:'Home', page: 'pages/template1.html',content: 'Raw denim you probably haven\'t heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.'},
@@ -682,45 +682,97 @@ null
 app.controller('statsCtrl',[ '$scope', function ($scope) { 
 }]);
 
-app.controller('adminCtrl',[ '$scope', function ($scope) {
-  $scope.Users = {
-    "Cols":['#id','Username','Password','Level'],
-    'Users':[
-    {name:'Admin1', password:'123456',level: 1},
-    {name:'Admin2', password:'123456789',level: 1},
-    {name:'User1', password:'4444',level: 2},
-    {name:'User2', password:'3333',level: 2}]
-  };
+app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
   $scope.isCollapsedAdd = true;
-  $scope.removeRow = function(name){        
+
+  $scope.userList = function () {
+    adminService.userList().then(function (data){
+      $scope.Users = data.data;
+    });
+  };
+  $scope.userList();
+
+  $scope.removeUser = function(id){ 
+    var myOtherModal = $modal({title : 'Are you sure you want delete selected user?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
+    myOtherModal.$promise.then(myOtherModal.show);
+    
+    $scope.delete = function() {
+      myOtherModal.$promise.then(myOtherModal.hide);
+      adminService.deleteUser(id).then(function (data){
+      var index = -1;   
+      var comArr = eval( $scope.Users);
+      for( var i = 0; i < comArr.length; i++ ) {
+        if(comArr[i].userId === id){
+          index = i;
+          console.log(index);
+          break;
+        }
+      }
+      if(index === -1){
+        alert("Something gone wrong");
+      } else {
+        $scope.Users.splice(index, 1); 
+        $alert({title: 'User deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+      } 
+    }, function (data){
+      alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+    });  
+    };
+  };
+
+  $scope.level = 2;
+
+  $scope.formUserAllGood = function () {
+    if($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood){
+      adminService.addUser($scope.myform.username.$viewValue,$scope.myform.password.$viewValue, $scope.myform.level.$viewValue).then(function (response){
+        $alert({title: 'New user added successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+        $scope.userList();
+      }, function (response) {
+        alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+      });
+    }
+    else{
+      alert("Please complete all fields.");
+      return;
+    }
+    $scope.username='';
+    $scope.password='';
+    $scope.password_c='';
+    return ($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood)
+  };
+
+  $scope.cameraList = function () {
+    adminService.cameraList().then(function (data){
+      $scope.Cameras = data.data;
+      console.log($scope.Cameras);
+    });
+  };
+  $scope.cameraList();
+
+  $scope.removeCamera = function(id){ 
+  var myModal = $modal({title : 'Are you sure you want delete selected camera?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
+  myModal.$promise.then(myModal.show);
+  
+  $scope.delete = function() {
+    myModal.$promise.then(myModal.hide);
+    adminService.deleteCamera(id).then(function (data){
     var index = -1;   
-    var comArr = eval( $scope.Users);
-    for( var i = 0; i < comArr.Users.length; i++ ) {
-      if( comArr.Users[i].name === name ) {
+    var comArr = eval($scope.Cameras);
+    for( var i = 0; i < comArr.length; i++ ) {
+      if(comArr[i].id === id){
         index = i;
         break;
       }
     }
-    if( index === -1 ) {
+    if(index === -1){
       alert("Something gone wrong");
-    }
-    $scope.Users.Users.splice( index, 1 );    
+    } else {
+      $scope.Cameras.splice(index, 1); 
+      $alert({title: 'Camera deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+    } 
+  }, function (data){
+    alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+  });  
   };
-  $scope.level='2';
-  $scope.editRow = function () {
   };
-  $scope.formAllGood = function () {
-    if($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood){
-    $scope.Users.Users.push({ 'name':$scope.myform.username.$viewValue, 'password': $scope.myform.password.$viewValue, 'level':$scope.myform.level.$viewValue/*, 'level':$scope.level*/ });
-    alert("New User Added.");
-  }
-  else{
-    alert("Please complete all fields.");
-    return;
-  }
-  $scope.username='';
-  $scope.password='';
-  $scope.password_c='';
-  return ($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood)
-}
 }]);
