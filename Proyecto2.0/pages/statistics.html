@@ -1,6 +1,5 @@
 <div class="col-xs-12" id="statistics">
-  <h1 class="text-center">Stats since <strong>10-Apr-2015</strong> until <strong>15-Apr-2015</strong></h1>
-  <h3 class="text-center">(<strong>12:00 pm </strong>-<strong> 15:00 pm</strong>)</h3>
+  <h1 class="text-center">Stats in real time</h1>
   <div class="row">
     <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-2">
       <h2 class="text-justify">Percentages</h2>
@@ -9,122 +8,60 @@
     <div class="continer col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-4">
       <div class="row col-xs-12">
         <h2>References</h2>
-         <div class="col-xs-12 linkBlack">
-          <a href=""><div class="info-box" ng-click="clickAll()">
-            <span class="info-box-icon bg-lighten-3"><img class="imgIcon" src="img/all.png" alt="All"></span>
-            <div class="info-box-content">
-              <span class="info-box-text">All</span>
-              <span class="info-box-number">{{person + bike + car + bus}}</span>
-            </div><!-- /.info-box-content -->
-          </div></a><!-- /.info-box -->
-        </div><!-- /.col -->
+        <div class="col-xs-12 linkBlack">
+          <a href="">
+            <div class="info-box" ng-click="clickAll()">
+              <span class="info-box-icon bg-lighten-3">
+                <img class="imgIcon" src="img/all.png" alt="All">
+              </span>
+              <div class="info-box-content">
+                <span class="info-box-text">All</span>
+                <span class="info-box-number">{{person + bike + car + bus}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
         <div class="col-md-12 col-sm-6 col-xs-12 linkBlack">
-          <a href=""><div class="info-box" ng-click="clickPerson()">
-            <span class="info-box-icon bg-aqua"><img class="imgIcon" src="img/man23.png" alt="People"></span>
-            <div class="info-box-content">
-              <span class="info-box-text">People</span>
-              <span class="info-box-number" >{{person}}</span>
-            </div><!-- /.info-box-content -->
-          </div></a><!-- /.info-box -->
-        </div><!-- /.col -->
-        <div class="col-md-12 col-sm-6 col-xs-12 linkBlack">
-          <a href=""><div class="info-box" ng-click="clickBike()">
-            <span class="info-box-icon bg-red"><img class="imgIcon" src="img/vintage15.png" alt="Bikes"></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Bikes</span>
-              <span class="info-box-number">{{bike}}</span>
-            </div><!-- /.info-box-content -->
-          </div></a><!-- /.info-box -->
-        </div><!-- /.col -->
-        <!-- fix for small devices only -->
+          <a href="">
+            <div class="info-box" ng-click="clickBike()">
+              <span class="info-box-icon bg-red">
+                <img class="imgIcon" src="img/vintage15.png" alt="Bikes">
+              </span>
+              <div class="info-box-content">
+                <span class="info-box-text">Bikes</span>
+                <span class="info-box-number">{{bike}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
         <div class="clearfix visible-sm-block"></div>
         <div class="col-md-12 col-sm-6 col-xs-12 linkBlack">
-          <a href=""><div class="info-box" ng-click="clickCar()">
-            <span class="info-box-icon bg-green"><img class="imgIcon" src="img/car95.png" alt="Cars"></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Cars</span>
-              <span class="info-box-number">{{car}}</span>
-            </div><!-- /.info-box-content -->
-          </div></a><!-- /.info-box -->
-        </div><!-- /.col -->
+          <a href="">
+            <div class="info-box" ng-click="clickCar()">
+              <span class="info-box-icon bg-green">
+                <img class="imgIcon" src="img/car95.png" alt="Cars">
+              </span>
+              <div class="info-box-content">
+                <span class="info-box-text">Cars</span>
+                <span class="info-box-number">{{car}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
         <div class="col-md-12 col-sm-6 col-xs-12 linkBlack">
-          <a href=""><div class="info-box" ng-click="clickBus()">
-            <span class="info-box-icon bg-yellow"><img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks"></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Buses/Trucks</span>
-              <span class="info-box-number">{{bus}}</span>
-            </div><!-- /.info-box-content -->
-          </div></a><!-- /.info-box -->
-        </div><!-- /.col -->
+          <a href="">
+            <div class="info-box" ng-click="clickBus()">
+              <span class="info-box-icon bg-yellow">
+                <img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
+              </span>
+              <div class="info-box-content">
+                <span class="info-box-text">Buses/Trucks</span>
+                <span class="info-box-number">{{bus}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!--
-<div bs-tabs>
-<div title="All" name="All" bs-pane>
-<div class="Back form-group"><br>
-<div class="container">
-<img class="imgIcon" src="img/all.png" alt="All">
-<strong> All</strong>
-<div class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs" google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs" google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-</div>
-</div>
-</div>
-<div title="People" name="People"  bs-pane>
-<div class="Back form-group"><br>
-<div class="container">
-<img class="imgIcon" src="img/man23.png" alt="People">
-<strong> People</strong>
-<div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-</div>
-</div>
-</div>
-<div title="Motorcycles" name="" bs-pane>
-<div class="Back form-group"><br>
-<div class="container">
-<img class="imgIcon" src="img/vintage15.png" alt="Motorcylce">
-<strong> Motorcylce</strong>
-<div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-</div>
-</div>
-</div>
-<div title="Cars" bs-pane>
-<div class="Back form-group"><br>
-<div class="container">
-<img class="imgIcon" src="img/car95.png" alt="Cars">
-<strong> Cars</strong>
-<div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-</div>
-</div>
-</div>
-<div title="Buses/Trucks" name="" bs-pane>
-<div class="Back form-group"><br>
-<div class="container">
-<img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
-<strong> Buses/Trucks</strong>
-<div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-<div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-</div>
-</div>
-</div>
-</div> 
--->
-<!--<div bs-active-pane="tabs.activeTab" bs-tabs>
-<div ng-repeat="tab in tabs" title="{{ tab.title }}" ng-include src="tab.page" bs-pane>
-</div>
-</div>-->
-
-
-
-

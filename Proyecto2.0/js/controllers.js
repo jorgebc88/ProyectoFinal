@@ -167,13 +167,12 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
   $scope.objectDetected = [];
   $scope.chart = {};
   $scope.chart.type = "PieChart";
-  $scope.chart.cssStyle = "height:500px; width:auto;";
+  $scope.chart.cssStyle = "height:400px; width:auto;";
   $scope.chart.formatters = {};
   $scope.clickAll = function () {
     $scope.flag = 0;
     $scope.chart.data = [
     ['Object', 'Quantity'],
-    ['People', $scope.person],
     ['Bikes', $scope.bike],
     ['Cars', $scope.car],
     ['Buses/Trucks', $scope.bus],
@@ -191,43 +190,15 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
       },
       "pieHole": 0.4,
       "slices": {
-        0: { color: '#00c0ef' },
-        1: { color: '#DD4B39' },
-        2: { color: '#00A65A' },
-        3: { color: '#F39C12' }
+        0: { color: '#DD4B39' },
+        1: { color: '#00A65A' },
+        2: { color: '#F39C12' },
       },
       "legend":"none",
       "chartArea":{"width":'90%',"height":'90%'}
     };
   };
   $scope.clickAll();
-  $scope.clickPerson = function () {
-    $scope.flag = 1;
-    $scope.chart.data = [
-    ['Object', 'Quantity'],
-    ['People-Down', $scope.personDown],
-    ['People-Up', $scope.personUp],
-    ];
-    $scope.chart.options = {
-      "isStacked": "true",
-      "fill": 20,
-      "displayExactValues": true,
-      "backgroundColor":"transparent",
-      "vAxis": {
-        "title": "Sales unit", "gridlines": {"count": 6}
-      },
-      "hAxis": {
-        "title": "Date"
-      },
-      "pieHole": 0.4,
-      "slices": {
-        0: { color: '#00c0ef' },
-        1: { color: '#0295B9' },
-      },
-      "legend":"none",
-      "chartArea":{"width":'90%',"height":'90%'}
-    };
-  };
   $scope.clickBike = function () {
     $scope.flag = 2;
     $scope.chart.data = [
@@ -319,15 +290,12 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
     },
     onMessage: function(e){ 
       $scope.objectDetected = angular.fromJson(e.data);
-      $scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
       $scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
       $scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
       $scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
-      $scope.personDown = $scope.objectDetected.detectedObject[0].person;
       $scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
       $scope.carDown = $scope.objectDetected.detectedObject[0].car;
       $scope.busDown = $scope.objectDetected.detectedObject[0].bus;
-      $scope.personUp = $scope.objectDetected.detectedObject[1].person;
       $scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
       $scope.carUp = $scope.objectDetected.detectedObject[1].car;
       $scope.busUp = $scope.objectDetected.detectedObject[1].bus;
@@ -338,17 +306,9 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
         if($scope.flag == 0){
           $scope.chart.data = [
           ['Object', 'Quantity'],
-          ['People', $scope.person],
           ['Bikes', $scope.bike],
           ['Cars', $scope.car],
           ['Buses/Trucks', $scope.bus],
-          ];
-        }
-        else if($scope.flag == 1){
-          $scope.chart.data = [
-          ['Object', 'Quantity'],
-          ['People-Down', $scope.personDown],
-          ['People-Up', $scope.personUp],
           ];
         }
         else if($scope.flag == 2){
