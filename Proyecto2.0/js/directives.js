@@ -4,15 +4,12 @@ app.directive('validUsername', function () {
     require: 'ngModel',
     link: function (scope, elm, attrs, ctrl) {
       ctrl.$parsers.unshift(function (viewValue) {
-// Any way to read the results of a "required" angular validator here?
-var isBlank = viewValue === ''
-var invalidChars = !isBlank && !/^[A-z0-9]+$/.test(viewValue)
-/*var invalidLen = !isBlank && !invalidChars && (viewValue.length < 5 || viewValue.length > 20)*/
-ctrl.$setValidity('isBlank', !isBlank)
-ctrl.$setValidity('invalidChars', !invalidChars)
-/*ctrl.$setValidity('invalidLen', !invalidLen)*/
-scope.usernameGood = !isBlank && !invalidChars /*&& !invalidLen*/
-})
+        var isBlank = viewValue === ''
+        var invalidChars = !isBlank && !/^[A-z0-9]+$/.test(viewValue)
+        ctrl.$setValidity('isBlank', !isBlank)
+        ctrl.$setValidity('invalidChars', !invalidChars)
+        scope.usernameGood = !isBlank && !invalidChars /*&& !invalidLen*/
+      })
     }
   }
 });
@@ -23,9 +20,7 @@ app.directive('validPassword', function () {
       ctrl.$parsers.unshift(function (viewValue) {
         var isBlank = viewValue === ''
         var invalidLen = !isBlank && (viewValue.length < 8 || viewValue.length > 20)
-        /*var isWeak = !isBlank && !invalidLen && !/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/.test(viewValue)*/
         ctrl.$setValidity('isBlank', !isBlank)
-        /*ctrl.$setValidity('isWeak', !isWeak)*/
         ctrl.$setValidity('invalidLen', !invalidLen)
         scope.passwordGood = !isBlank /*&& !isWeak*/ && !invalidLen
       })
@@ -46,7 +41,57 @@ app.directive('validPasswordC', function () {
     }
   }
 });
-
+app.directive('validLocation', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function (viewValue) {
+        var isBlank = viewValue === ''
+        ctrl.$setValidity('isBlank', !isBlank)
+        scope.locationGood = !isBlank
+      })
+    }
+  }
+});
+app.directive('validLatitude', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function (viewValue) {
+        var isBlank = viewValue === ''
+        ctrl.$setValidity('isBlank', !isBlank)
+        ctrl.$setValidity('invalidChars', !invalidChars)
+        scope.latitudeGood = !isBlank
+      })
+    }
+  }
+});
+app.directive('validLongitude', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function (viewValue) {
+        var isBlank = viewValue === ''
+        ctrl.$setValidity('isBlank', !isBlank)
+        scope.longitudeGood = !isBlank
+      })
+    }
+  }
+});
+app.directive('validIp', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function (viewValue) {
+        var isBlank = viewValue === ''
+        var invalidChars = !isBlank && !(/^([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})/.test(viewValue))
+        ctrl.$setValidity('isBlank', !isBlank)
+        ctrl.$setValidity('invalidChars', !invalidChars)
+        scope.ipGood = !isBlank && !invalidChars /*&& !invalidLen*/
+      })
+    }
+  }
+});
 app.directive('ngEnter', function() {
   return function(scope, element, attrs) {
     element.bind("keydown keypress", function(event) {
@@ -54,7 +99,6 @@ app.directive('ngEnter', function() {
         scope.$apply(function(){
           scope.$eval(attrs.ngEnter, {'event': event});
         });
-
         event.preventDefault();
       }
     });

@@ -1,168 +1,174 @@
-<div id="admin" class="container">
-    <div class="container">
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <h1>User list</h1>
-            <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
-                <thead>
-                    <tr class="info">
-                        <th class="col-xs-1 text-center">#</th>
-                        <th class="col-xs-3 text-right">User name</th>
-                        <th class="col-xs-4 text-right">Password</th>
-                        <th class="col-xs-2 text-center">Level</th>
-                        <th class="col-xs-2 text-center">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="user in Users" class="user-listing">
-                        <td class="text-center alignMiddle">{{$index + 1}}</td>
-                        <td class="alignMiddle">{{user.userName}}</td>
-                        <td class="alignMiddle">{{user.password}}</td>
-                        <td class="text-center alignMiddle">{{user.level}}</td>
-                        <td class="text-center alignMiddle">
-                            <button ng-disabled="{{user.level == 1}}" type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeUser(user.userId)" ><span class="glyphicon glyphicon-trash" ></span> <span class="hidden-xs"></span></button>
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6">
-            <h1>Camera list</h1>
-            <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
-                <thead>
-                    <tr class="info">
-                        <th class="col-xs-1 text-center">#</th>
-                        <th class="col-xs-3 text-right">Location</th>
-                        <th class="col-xs-2 text-right">Latitude</th>
-                        <th class="col-xs-2 text-right">Longitude</th>
-                        <th class="col-xs-2 text-center">Ip</th>
-                        <th class="col-xs-2 text-center">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="camera in Cameras" class="user-listing">
-                        <td class="text-center alignMiddle">{{$index + 1}}</td>
-                        <td class="alignMiddle">{{camera.location}}</td>
-                        <td class="alignMiddle">{{camera.latitude}}</td>
-                        <td class="alignMiddle">{{camera.longitude}}</td>
-                        <td class="text-center alignMiddle">{{camera.ip}}</td>
-                        <td class="text-center alignMiddle">
-                            <button type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeCamera(camera.id)"><span class="glyphicon glyphicon-trash" ></span> <span class="hidden-xs"></span></button>
-                        </td>
-                    </tr>
+<div id="admin" class"container">
+    <div class="row">
+        <div class="container col-xs-12 col-md-6">
+            <div class="container col-xs-12">
+                <h1>User list</h1>
+                <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
+                    <thead>
+                        <tr class="info">
+                            <th class="col-xs-1 text-center">#</th>
+                            <th class="col-xs-3 text-right">User name</th>
+                            <th class="col-xs-4 text-right">Password</th>
+                            <th class="col-xs-2 text-center">Level</th>
+                            <th class="col-xs-2 text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in Users" class="user-listing">
+                            <td class="text-center alignMiddle">{{$index + 1}}</td>
+                            <td class="alignMiddle">{{user.userName}}</td>
+                            <td class="alignMiddle">{{user.password}}</td>
+                            <td class="text-center alignMiddle">{{user.level}}</td>
+                            <td class="text-center alignMiddle">
+                                <button ng-disabled="{{user.level == 1}}" type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeUser(user.userId)">
+                                    <span class="glyphicon glyphicon-trash"></span> 
+                                    <span class="hidden-xs"></span>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="container form-group panel-group col-xs-12 col-sm-6" ng-model="activePanel" bs-collapse>
-            <button class="btn btn-primary" bs-collapse-toggle><span class="glyphicon glyphicon-plus"></span> Add New User</button>
-            <div class="panel-collapse" bs-collapse-target>
-                <form  name="myform" class="form form-horizontal" novalidate>
-                    <div class="well well-lg">
-                        <div class="form-group" ng-class="{'has-error': myform.username.$error.isBlank}">
-                            <label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputUsername" name="username" ng-model="username" valid-username />
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.username.$error.isBlank">Username Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.username.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
+            <div class="container form-group panel-group col-xs-12" ng-model="activePanel" bs-collapse>
+                <button class="btn btn-primary" bs-collapse-toggle>
+                    <span class="glyphicon glyphicon-plus"></span> Add New User
+                </button>
+                <div class="panel-collapse" bs-collapse-target>
+                    <form  name="myform" class="form form-horizontal" novalidate>
+                        <div class="well well-lg">
+                            <div class="form-group" ng-class="{'has-error': myform.username.$error.isBlank}">
+                                <label for="inputUsername" class="col-sm-4 control-label">Username:</label>
+                                <div class="col-sm-8 controls">
+                                    <input type="text" class="form-control" id="inputUsername" name="username" ng-model="username" placeholder="Username" valid-username />
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.username.$error.isBlank">Username Required.</span>
+                                        <span class="text-danger" ng-if="!!myform.username.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group" ng-class="{'has-error': myform.password.$error.isBlank || myform.password.$error.invalidLen}">
-                            <label for="inputPassword" class="col-sm-2 control-label">Password:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputPassword" name="password" ng-model="password" valid-password />
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.password.$error.isBlank">Password Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.password.$error.invalidLen">Must be 8-20 characters.</span>
+                            <div class="form-group" ng-class="{'has-error': myform.password.$error.isBlank || myform.password.$error.invalidLen}">
+                                <label for="inputPassword" class="col-sm-4 control-label">Password:</label>
+                                <div class="col-sm-8 controls">
+                                    <input type="text" class="form-control" id="inputPassword" name="password" ng-model="password" placeholder="Password" valid-password />
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.password.$error.isBlank">Password Required.</span>
+                                        <span class="text-danger" ng-if="!!myform.password.$error.invalidLen">Must be 8-20 characters.</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group" ng-class="{'has-error': myform.password_c.$error.isBlank || myform.password_c.$error.noMatch}">
-                            <label for="password_c" class="col-sm-2 control-label">Confirm Password:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="password_c" name="password_c" ng-model="password_c" valid-password-c />
-                                <div class="help-inline"> 
-                                    <span class="text-danger" ng-if="!!myform.password_c.$error.isBlank">Confirmation Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.password_c.$error.noMatch">Passwords don't match.</span>
+                            <div class="form-group" ng-class="{'has-error': myform.password_c.$error.isBlank || myform.password_c.$error.noMatch}">
+                                <label for="password_c" class="col-sm-4 control-label">Confirm Password:</label>
+                                <div class="col-sm-8 controls">
+                                    <input type="text" class="form-control" id="password_c" name="password_c" ng-model="password_c" placeholder="Password confirm" valid-password-c/>
+                                    <div class="help-inline"> 
+                                        <span class="text-danger" ng-if="!!myform.password_c.$error.isBlank">Confirmation Required.</span>
+                                        <span class="text-danger" ng-if="!!myform.password_c.$error.noMatch">Passwords don't match.</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="level" class="col-sm-2 control-label">Level:</label>
-                            <div class="col-xs-2 col-sm-4">
-                                <select id="level" name="level" ng-model="level" class="form-control" >
-                                    <option value="1" selected="true">1.Admin</option>
-                                    <option value="2">2.User</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group form-actions" ng-click="formUserAllGood()">
-                            <div class="col-sm-offset-2 col-sm-10 ">
-                                <input type="submit" class="btn btn-primary" value="Submit" /></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="container form-group panel-group col-xs-12 col-sm-6" ng-model="activePanel" bs-collapse>
-            <button class="btn btn-primary" bs-collapse-toggle><span class="glyphicon glyphicon-plus"></span> Add New Camera</button>
-            <div class="panel-collapse" bs-collapse-target>
-                <form  name="myform" class="form form-horizontal" novalidate>
-                    <div class="well well-lg">
-                        <div class="form-group" ng-class="{'has-error': myform.location.$error.isBlank}">
-                            <label for="inputUsername" class="col-sm-2 control-label">Location:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputUsername" name="location" ng-model="location"/>
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.location.$error.isBlank">Username Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.location.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
+                            <div class="form-group">
+                                <label for="level" class="col-sm-4 control-label">Level:</label>
+                                <div class="col-sm-4">
+                                    <select id="level" name="level" ng-model="level" class="form-control" >
+                                        <option value="1" selected="true">1.Admin</option>
+                                        <option value="2">2.User</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                         <div class="form-group" ng-class="{'has-error': myform.location.$error.isBlank}">
-                            <label for="inputUsername" class="col-sm-2 control-label">Latitude:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputUsername" name="location" ng-model="location"/>
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.location.$error.isBlank">Username Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.location.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
+                            <div class="form-group form-actions" ng-click="formUserAllGood()">
+                                <div class="col-sm-offset-4 col-sm-10 ">
+                                    <input type="submit" class="btn btn-primary" value="Submit"/>
                                 </div>
-                            </div>
-                        </div>
-                         <div class="form-group" ng-class="{'has-error': myform.location.$error.isBlank}">
-                            <label for="inputUsername" class="col-sm-2 control-label">Longitude:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputUsername" name="location" ng-model="location"/>
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.location.$error.isBlank">Username Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.location.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="form-group" ng-class="{'has-error': myform.location.$error.isBlank}">
-                            <label for="inputUsername" class="col-sm-2 control-label">Ip:</label>
-                            <div class="col-sm-10 controls">
-                                <input type="text" class="form-control" id="inputUsername" name="location" ng-model="location"/>
-                                <div class="help-inline">
-                                    <span class="text-danger" ng-if="!!myform.location.$error.isBlank">Username Required.</span>
-                                    <span class="text-danger" ng-if="!!myform.location.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-actions" ng-click="formCameraAllGood()">
-                            <div class="col-sm-offset-2 col-sm-10 ">
-                                <input type="submit" class="btn btn-primary" value="Submit" /></div>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-<!--<td class="text-center alignMiddle">
-<button  ng-hide="editMode" ng-click="editMode=true"ng-disabled="{{user.level == 1}}" class="btn btn-info" aria-label="Left Align" ><span class="glyphicon glyphicon-edit"></span> </button>
-<div ng-show="editMode" class="row">
-<button  ng-show="editMode" ng-click="editRow()" ng-disabled="{{user.level == 1}}" class="btn btn-info" aria-label="Left Align" ><span class="glyphicon glyphicon-ok"></span> </button>
-<button  ng-show="editMode"ng-disabled="{{user.level == 1}}" class="btn btn-danger" aria-label="Left Align" ><span class="glyphicon glyphicon-remove"></span> </button>
+        <div class="container col-xs-12 col-md-6">
+            <div class="container col-xs-12">
+                <h1>Camera list</h1>
+                <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
+                    <thead>
+                        <tr class="info">
+                            <th class="col-xs-1 text-center">#</th>
+                            <th class="col-xs-3 text-right">Location</th>
+                            <th class="col-xs-2 text-right">Latitude</th>
+                            <th class="col-xs-2 text-right">Longitude</th>
+                            <th class="col-xs-2 text-center">Ip</th>
+                            <th class="col-xs-2 text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="camera in Cameras" class="user-listing">
+                            <td class="text-center alignMiddle">{{$index + 1}}</td>
+                            <td class="alignMiddle">{{camera.location}}</td>
+                            <td class="alignMiddle">{{camera.latitude}}</td>
+                            <td class="alignMiddle">{{camera.longitude}}</td>
+                            <td class="text-center alignMiddle">{{camera.ip}}</td>
+                            <td class="text-center alignMiddle">
+                                <button type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeCamera(camera.id)">
+                                    <span class="glyphicon glyphicon-trash"></span> 
+                                    <span class="hidden-xs"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container form-group panel-group col-xs-12" ng-model="activePanel2" bs-collapse>
+                <button class="btn btn-primary" bs-collapse-toggle>
+                    <span class="glyphicon glyphicon-plus"></span> Add New Camera
+                </button>
+                <div class="panel-collapse" bs-collapse-target>
+                    <form  name="myform" class="form form-horizontal" novalidate>
+                        <div class="well well-lg">
+                            <div class="form-group" ng-class="{'has-error': myform.location.$error.isBlank}">
+                                <label for="inputLocation" class="col-sm-2 control-label">Location:</label>
+                                <div class="col-sm-10 controls">
+                                    <input type="text" class="form-control" id="inputLocation" name="location" placeholder="Location" ng-model="location" valid-location/>
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.location.$error.isBlank">Location Required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': myform.latitude.$error.isBlank}">
+                                <label for="inputLatitude" class="col-sm-2 control-label">Latitude:</label>
+                                <div class="col-sm-10 controls">
+                                    <input type="text" class="form-control" id="inputLatitude" name="latitude" placeholder="E.g: -26.828828" ng-model="latitude" valid-latitude/>
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.latitude.$error.isBlank">Latitude Required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': myform.longitude.$error.isBlank}">
+                                <label for="inputLongitude" class="col-sm-2 control-label">Longitude:</label>
+                                <div class="col-sm-10 controls">
+                                    <input type="text" class="form-control" id="inputLongitude" name="longitude" placeholder="E.g: 65.216022" ng-model="longitude" valid-longitude/>
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.longitude.$error.isBlank">Longitude Required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': myform.ip.$error.isBlank}">
+                                <label for="inputIp" class="col-sm-2 control-label">Ip:</label>
+                                <div class="col-sm-10 controls">
+                                    <input type="text" class="form-control" id="inputIp" name="ip" ng-model="ip" placeholder="E.g: 192.168.2.100" valid-ip/>
+                                    <div class="help-inline">
+                                        <span class="text-danger" ng-if="!!myform.ip.$error.isBlank">Ip Required.</span>
+                                        <span class="text-danger" ng-if="!!myform.ip.$error.invalidChars">Ip must have the following format: xxx.xxx.xxx.xxx</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-actions" ng-click="formCameraAllGood()">
+                                <div class="col-sm-offset-2 col-sm-10 ">
+                                    <input type="submit" class="btn btn-primary" value="Submit" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</td>-->

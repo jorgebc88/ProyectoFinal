@@ -535,6 +535,7 @@ background-color: #000;
 /**********************************ADMIN*******************************************/
 #admin{
   padding-top: 10rem;
+  height: 800px;
 }
 .form-group .help-block {
   display: none;

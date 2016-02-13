@@ -41,12 +41,17 @@ app.service('adminService', ['$http', function ($http){
     return $http.get('http://localhost:8080/FinalProject/camera/delete/' + id);
   };
 
+  var addCamera = function (location, latitud, longitude, ip){
+    return $http.post('http://localhost:8080/FinalProject/camera/newCamera', {"location": location, "latitud": latitud, "longitude": longitude, "ip": ip});
+  };
+
   return {
     userList : userList,
     deleteUser : deleteUser,
     addUser : addUser,
     cameraList : cameraList,
-    deleteCamera : deleteCamera
+    deleteCamera : deleteCamera,
+    addCamera: addCamera
   }
 
 }])

@@ -683,7 +683,7 @@ app.controller('statsCtrl',[ '$scope', function ($scope) {
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
-  $scope.isCollapsedAdd = true;
+  $scope.isCollapsedAdd = false;
 
   $scope.userList = function () {
     adminService.userList().then(function (data){
@@ -743,6 +743,7 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
 
   $scope.cameraList = function () {
     adminService.cameraList().then(function (data){
+      console.log(data);
       $scope.Cameras = data.data;
       console.log($scope.Cameras);
     });
@@ -773,6 +774,26 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
   }, function (data){
     alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
   });  
+  };
+
+  $scope.formCameraAllGood = function () {
+    if($scope.locationGood && $scope.latitudeGood && $scope.longitudeGood && $scope.ipGood){
+      adminService.addCamera($scope.myform.location.$viewValue,$scope.myform.latitude.$viewValue, $scope.myform.longitude.$viewValue, $scope.myform.ip.$viewValue).then(function (response){
+        $alert({title: 'New camera added successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+        $scope.userList();
+      }, function (response) {
+        alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+      });
+    }
+    else{
+      alert("Please complete all fields.");
+      return;
+    }
+    $scope.location='';
+    $scope.latitude='';
+    $scope.longitude='';
+    $scope.ip='';
+    return ($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood && $scope.ipGood)
   };
   };
 }]);
