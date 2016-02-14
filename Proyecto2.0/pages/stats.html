@@ -1,4 +1,52 @@
 <div id="statistics">
+  <div bs-tabs>
+  <div title="All" name="All" bs-pane>
+    <div class="Back form-group"><br>
+      <div class="container">
+        <img class="imgIcon" src="img/all.png" alt="All">
+        <strong> All</strong>
+        <div class="hidden-xs" google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+    </div>
+  </div>
+  <div title="People" name="People"  bs-pane>
+    <div class="Back form-group"><br>
+      <div class="container">
+        <img class="imgIcon" src="img/man23.png" alt="People">
+        <strong> People</strong>
+        <div google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+    </div>
+  </div>
+  <div title="Motorcycles" name="" bs-pane>
+    <div class="Back form-group"><br>
+      <div class="container">
+        <img class="imgIcon" src="img/vintage15.png" alt="Motorcylce">
+        <strong> Motorcylce</strong>
+        <div google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+    </div>
+  </div>
+  <div title="Cars" bs-pane>
+    <div class="Back form-group"><br>
+      <div class="container">
+        <img class="imgIcon" src="img/car95.png" alt="Cars">
+        <strong> Cars</strong>
+        <div google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+    </div>
+  </div>
+  <div title="Buses/Trucks" name="" bs-pane>
+    <div class="Back form-group"><br>
+      <div class="container">
+        <img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
+        <strong> Buses/Trucks</strong>
+        <div google-chart chart="chart" style="{{chart.cssStyle}}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <div class="row">
     <div class="container panel-group" ng-model="activePanel" bs-collapse>
       <button class="btn btn-primary" bs-collapse-toggle>Advanced Search <span class="glyphicon glyphicon-search"></span></button>
@@ -56,63 +104,6 @@
           </div>
         </div>
       </div> 
-    </div>
-  </div>
-</div>
-<div bs-tabs>
-  <div title="All" name="All" bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/all.png" alt="All">
-        <strong> All</strong>
-        <div class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs" google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs" google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-      </div>
-    </div>
-  </div>
-  <div title="People" name="People"  bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/man23.png" alt="People">
-        <strong> People</strong>
-        <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-      </div>
-    </div>
-  </div>
-  <div title="Motorcycles" name="" bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/vintage15.png" alt="Motorcylce">
-        <strong> Motorcylce</strong>
-        <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-      </div>
-    </div>
-  </div>
-  <div title="Cars" bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/car95.png" alt="Cars">
-        <strong> Cars</strong>
-        <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-      </div>
-    </div>
-  </div>
-  <div title="Buses/Trucks" name="" bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
-        <strong> Buses/Trucks</strong>
-        <div  class="hidden-xs" google-chart chart="chartObject" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject2" style="{{chart.cssStyle}}"></div>
-        <div class="visible-xs"  google-chart chart="chartObject3" style="{{chart.cssStyle}}"></div>
-      </div>
     </div>
   </div>
 </div>

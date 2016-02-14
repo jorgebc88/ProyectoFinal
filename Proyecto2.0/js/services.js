@@ -41,9 +41,9 @@ app.service('adminService', ['$http', function ($http){
     return $http.get('http://localhost:8080/FinalProject/camera/delete/' + id);
   };
 
-  var addCamera = function (location, latitud, longitude, ip){
-    return $http.post('http://localhost:8080/FinalProject/camera/newCamera', {"location": location, "latitud": latitud, "longitude": longitude, "ip": ip});
-  };
+  var addCamera = function (location, latitude, longitude, ip){
+    return $http.post('http://localhost:8080/FinalProject/camera/newCamera', {"location": location, "latitude": latitude, "longitude": longitude, "ip": ip});
+  };  
 
   return {
     userList : userList,
@@ -54,4 +54,15 @@ app.service('adminService', ['$http', function ($http){
     addCamera: addCamera
   }
 
-}])
+}]);
+
+app.service('objectService', ['$http', function ($http){
+  var detectedObject = function () {
+    return $http.get('http://localhost:8080/FinalProject/detectedObject/requestDetectedObject');
+  };
+
+  return {
+    detectedObject : detectedObject
+  }
+
+}]);

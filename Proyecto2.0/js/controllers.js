@@ -336,350 +336,198 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
     }    
   });
 $scope.sse.start();
-$scope.tabs = [
-{title:'Home', page: 'pages/template1.html',content: 'Raw denim you probably haven\'t heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.'},
-{title:'Profile', page: 'pages/template2.html',content: 'Food truck fixie locavore, accusamus mcsweeney\'s marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.'},
-{title:'About', page: 'pages/template3.html',content: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.'}
-];
-$scope.tabs.activeTab = "Profile";
-$scope.Today = new Date();
-$scope.maxDate= new Date();
-$scope.fromTime = new Date(0,0);
-$scope.toTime = new Date();
-$scope.selectedTimeAsNumber = 10 * 36e5;
-$scope.selectedTimeAsString = '10:00';
-$scope.sharedDate = new Date(new Date().setMinutes(0));
-$scope.radioModel = 'Left';
-$scope.showToday= true; 
-$scope.showHour=true;
-$scope.tab='all';
-$scope.today = function() {
-  $scope.dt = new Date();
-  $scope.dt2 = new Date();
-};
-$scope.today();
-$scope.clear = function () {
-  $scope.dt = null;
-  $scope.dt2 = null;
-};
-$scope.toggleMin = function() {
-  $scope.minDate = $scope.minDate ? null : new Date();
-};
-$scope.toggleMin();
-$scope.toggleMax = function() {
-  $scope.maxDate  = new Date();
-};
-$scope.toggleMax();
-$scope.open = function($event) {
-  $event.preventDefault();
-  $event.stopPropagation();
-  $scope.opened = true;
-};
-$scope.open2 = function($event) {
-  $event.preventDefault();
-  $event.stopPropagation();
-  $scope.opened2 = true;
-};
-$scope.dateOptions = {
-  formatYear: 'yy',
-  startingDay: 1
-};
-$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-$scope.format = $scope.formats[0];
-$scope.mytime = new Date();
-$scope.hstep = 1;
-$scope.mstep = 1;
-$scope.options = {
-  hstep: [1, 2, 3],
-  mstep: [1, 5, 10, 15, 25, 30]
-};
-$scope.ismeridian = true;
-$scope.toggleMode = function() {
-  $scope.ismeridian = ! $scope.ismeridian;
-};
-$scope.update = function() {
-  var d = new Date();
-  d.setHours( 14 );
-  d.setMinutes( 0 );
-  $scope.mytime = d;
-};
-$scope.changed = function () {
-  $log.log('Time changed to: ' + $scope.mytime);
-};
-$scope.clear = function() {
-  $scope.mytime = null;
-};
-/*****people******/
-$scope.chartObject = {
-  "type": "ColumnChart",
-  "displayed": true,
-  "data": {
-    "cols": [
-    {"id": "month","label": "Month","type": "string","p": {}},
-    {"id": "people-id","label": "People-Up","type": "number","p": {}},
-    {"id": "people-id","label": "People-Down","type": "number","p": {}}
-    ],
-    "rows": [
-    {"c": [
-    {"v": "Jan"},
-    {"v": 234,"f": "Up"},
-    {"v": 234,"f": "Down"},
-    null
-    ]
-  },
-  {"c": [
-  {"v": "Feb"},
-  {"v": 3454,"f": "Up"},
-  {"v": 456,"f": "Down"},
-  null
-  ]
-},
-{"c": [
-{"v": "Mar"},
-{"v": 5677,"f": "Up"},
-{"v": 567,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Apr"},
-{"v": 678,"f": "Up"},
-{"v": 789,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "May"},
-{"v": 796,"f": "Up"},
-{"v": 986,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Jun"},
-{"v": 3456,"f": "Up"},
-{"v": 345,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Jul"},
-{"v": 234,"f": "Up"},
-{"v": 234,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Aug"},
-{"v": 3454,"f": "Up"},
-{"v": 456,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Sep"},
-{"v": 5677,"f": "Up"},
-{"v": 567,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Oct"},
-{"v": 678,"f": "Up"},
-{"v": 789,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Nov"},
-{"v": 796,"f": "Up"},
-{"v": 986,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Dec"},
-{"v": 3456,"f": "Up"},
-{"v": 345,"f": "Down"},
-null
-]
-},
-]
-},
-"options": {
-  "isStacked": "true",
-  "fill": 2,
-  "displayExactValues": true,
-  "vAxis": {
-    "gridlines": {
-      "count": 10
-    }
-  },
-  "hAxis": {
-  },
-  "tooltip": {
-    "isHtml": false
-  },
-  "allowHtml": true,
-  "backgroundColor":"transparent",
-  "legend":"none",
-  "chartArea": {"width":'90%',"height":'80%'},
-  "colors":['#333','#222']
-}
-}
-$scope.chartObject2 = {
-  "type": "ColumnChart",
-  "displayed": true,
-  "data": {
-    "cols": [
-    {"id": "month","label": "Month","type": "string","p": {}},
-    {"id": "people-id","label": "People-Up","type": "number","p": {}},
-    {"id": "people-id","label": "People-Down","type": "number","p": {}}
-    ],
-    "rows": [
-    {"c": [
-    {"v": "Jan"},
-    {"v": 234,"f": "Up"},
-    {"v": 234,"f": "Down"},
-    null
-    ]
-  },
-  {"c": [
-  {"v": "Feb"},
-  {"v": 3454,"f": "Up"},
-  {"v": 456,"f": "Down"},
-  null
-  ]
-},
-{"c": [
-{"v": "Mar"},
-{"v": 5677,"f": "Up"},
-{"v": 567,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Apr"},
-{"v": 678,"f": "Up"},
-{"v": 789,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "May"},
-{"v": 796,"f": "Up"},
-{"v": 986,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Jun"},
-{"v": 3456,"f": "Up"},
-{"v": 345,"f": "Down"},
-null
-]
-},
-]
-},
-"options": {
-  "isStacked": "true",
-  "fill": 2,
-  "displayExactValues": true,
-  "vAxis": {
-    "gridlines": {
-      "count": 10
-    }
-  },
-  "hAxis": {
-  },
-  "tooltip": {
-    "isHtml": false
-  },
-  "allowHtml": true,
-  "backgroundColor":"transparent",
-  "legend":"none",
-  "chartArea": {"left":40,"width":'90%',"height":'80%'},
-  "colors":['#333','#222']
-}
-}
-$scope.chartObject3 = {
-  "type": "ColumnChart",
-  "displayed": true,
-  "data": {
-    "cols": [
-    {"id": "month","label": "Month","type": "string","p": {}},
-    {"id": "people-id","label": "People-Up","type": "number","p": {}},
-    {"id": "people-id","label": "People-Down","type": "number","p": {}}
-    ],
-    "rows": [
-    {"c": [
-    {"v": "Jul"},
-    {"v": 234,"f": "Up"},
-    {"v": 234,"f": "Down"},
-    null
-    ]
-  },
-  {"c": [
-  {"v": "Aug"},
-  {"v": 3454,"f": "Up"},
-  {"v": 456,"f": "Down"},
-  null
-  ]
-},
-{"c": [
-{"v": "Sep"},
-{"v": 5677,"f": "Up"},
-{"v": 567,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Oct"},
-{"v": 678,"f": "Up"},
-{"v": 789,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Nov"},
-{"v": 796,"f": "Up"},
-{"v": 986,"f": "Down"},
-null
-]
-},
-{"c": [
-{"v": "Dec"},
-{"v": 3456,"f": "Up"},
-{"v": 345,"f": "Down"},
-null
-]
-},
-]
-},
-"options": {
-  "isStacked": "true",
-  "fill": 2,
-  "displayExactValues": true,
-  "vAxis": {
-    "gridlines": {
-      "count": 10
-    }
-  },
-  "hAxis": {
-  },
-  "tooltip": {
-    "isHtml": false
-  },
-  "allowHtml": true,
-  "backgroundColor":"transparent",
-  "legend":"none",
-  "chartArea": {"left":40,"width":'90%',"height":'80%'},
-  "colors":['#333','#222']
-}
-}
 }]);
 
-app.controller('statsCtrl',[ '$scope', function ($scope) { 
+app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService', '$filter', function ($scope,$http,Oboe,$location,objectService,$filter) { 
+  $scope.Today = new Date();
+  $scope.maxDate= new Date();
+  $scope.fromTime = new Date(0,0);
+  $scope.toTime = new Date();
+  $scope.selectedTimeAsNumber = 10 * 36e5;
+  $scope.selectedTimeAsString = '10:00';
+  $scope.sharedDate = new Date(new Date().setMinutes(0));
+  $scope.radioModel = 'Left';
+  $scope.showToday= true; 
+  $scope.showHour=true;
+  $scope.tab='all';
+  $scope.today = function() {
+    $scope.dt = new Date();
+    $scope.dt2 = new Date();
+  };
+  $scope.today();
+  $scope.clear = function () {
+    $scope.dt = null;
+    $scope.dt2 = null;
+  };
+  $scope.toggleMin = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+  $scope.toggleMin();
+  $scope.toggleMax = function() {
+    $scope.maxDate  = new Date();
+  };
+  $scope.toggleMax();
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened = true;
+  };
+  $scope.open2 = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened2 = true;
+  };
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[0];
+  $scope.mytime = new Date();
+  $scope.hstep = 1;
+  $scope.mstep = 1;
+  $scope.options = {
+    hstep: [1, 2, 3],
+    mstep: [1, 5, 10, 15, 25, 30]
+  };
+  $scope.ismeridian = true;
+  $scope.toggleMode = function() {
+    $scope.ismeridian = ! $scope.ismeridian;
+  };
+  $scope.update = function() {
+    var d = new Date();
+    d.setHours( 14 );
+    d.setMinutes( 0 );
+    $scope.mytime = d;
+  };
+  $scope.changed = function () {
+    $log.log('Time changed to: ' + $scope.mytime);
+  };
+  $scope.clear = function() {
+    $scope.mytime = null;
+  };
+  $scope.flag = 0; 
+  $scope.objectDetected = [];
+  $scope.sunday = [];
+  $scope.monday = [];
+  $scope.tuesday = [];
+  $scope.wednesday = [];
+  $scope.thrusday = [];
+  $scope.friday =[];
+  $scope.saturday = [];
+  $scope.chart = {};
+  objectService.detectedObject().then(function (data){
+      var counter = 0;
+      var values = data.data;
+      console.log(data.data);
+      angular.forEach(values, function (value, key) {
+        var date = new Date(value.date);
+
+        if(date.getDay() == 0) {
+          $scope.sunday.push(value);
+        }
+        else if(date.getDay() == 1) {
+          $scope.monday.push(value);
+        }
+        else if(date.getDay() == 2) {
+          $scope.tuesday.push(value);
+        }
+        else if(date.getDay() == 3) {
+          $scope.wednesday.push(value);
+        }
+        else if(date.getDay() == 4) {
+          $scope.thrusday.push(value);
+        }
+        else if(date.getDay() == 5) {
+          $scope.friday.push(value);
+        }
+        else if(date.getDay() == 6) {
+          $scope.saturday.push(value);
+        }
+        counter++;
+      });
+    });
+
+  $scope.chart.type = "ColumnChart";
+  $scope.chart.cssStyle = "height:400px; width:auto;";
+  $scope.chart.options = {
+    "isStacked": "true",
+    "fill": 2,
+    "displayExactValues": true,
+    "vAxis": {
+      "gridlines": {
+        "count": 10
+      }
+    },
+    "hAxis": {
+    },
+    "tooltip": {
+      "isHtml": false
+    },
+    "allowHtml": true,
+    "backgroundColor":"transparent",
+    "legend":"none",
+    "chartArea": {"width":'90%',"height":'80%'},
+    "colors":['#333','#222']
+  };
+
+  $scope.chart.data = {
+  "cols": [
+    {"id": "month","label": "Month","type": "string","p": {}},
+    {"id": "people-id","label": "People-Up","type": "number","p": {}},
+    {"id": "people-id","label": "People-Down","type": "number","p": {}}
+  ],
+  "rows": [
+      {
+        "c": [
+              {"v": "Sun"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      },
+      {
+        "c": [
+              {"v": "Mon"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      },
+      {
+        "c": [
+              {"v": "Tue"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      },
+      {
+        "c": [
+              {"v": "Wed"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      },
+      {
+        "c": [
+              {"v": "Thr"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      },
+      {
+        "c": [
+              {"v": "Sat"},
+              {"v": 234,"f": "Up"},
+              {"v": 234,"f": "Down"},
+              null
+              ]
+      }
+  ]
+};
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
@@ -695,28 +543,28 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
   $scope.removeUser = function(id){ 
     var myOtherModal = $modal({title : 'Are you sure you want delete selected user?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
     myOtherModal.$promise.then(myOtherModal.show);
-    
+
     $scope.delete = function() {
       myOtherModal.$promise.then(myOtherModal.hide);
       adminService.deleteUser(id).then(function (data){
-      var index = -1;   
-      var comArr = eval( $scope.Users);
-      for( var i = 0; i < comArr.length; i++ ) {
-        if(comArr[i].userId === id){
-          index = i;
-          console.log(index);
-          break;
+        var index = -1;   
+        var comArr = eval( $scope.Users);
+        for( var i = 0; i < comArr.length; i++ ) {
+          if(comArr[i].userId === id){
+            index = i;
+            console.log(index);
+            break;
+          }
         }
-      }
-      if(index === -1){
-        alert("Something gone wrong");
-      } else {
-        $scope.Users.splice(index, 1); 
-        $alert({title: 'User deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
-      } 
-    }, function (data){
-      alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
-    });  
+        if(index === -1){
+          alert("Something gone wrong");
+        } else {
+          $scope.Users.splice(index, 1); 
+          $alert({title: 'User deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+        } 
+      }, function (data){
+        alert("An error ocurred in the database. Please try again.");
+      });  
     };
   };
 
@@ -724,11 +572,11 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
 
   $scope.formUserAllGood = function () {
     if($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood){
-      adminService.addUser($scope.myform.username.$viewValue,$scope.myform.password.$viewValue, $scope.myform.level.$viewValue).then(function (response){
+      adminService.addUser($scope.userForm.username.$viewValue,$scope.userForm.password.$viewValue, $scope.userForm.level.$viewValue).then(function (response){
         $alert({title: 'New user added successfully!', placement: 'top', type: 'info', show: true, duration: 2});
         $scope.userList();
       }, function (response) {
-        alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+        alert("An error ocurred in the database. Please try again.");
       });
     }
     else{
@@ -738,62 +586,64 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
     $scope.username='';
     $scope.password='';
     $scope.password_c='';
+    $scope.userForm.$setPristine();
     return ($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood)
   };
 
   $scope.cameraList = function () {
     adminService.cameraList().then(function (data){
-      console.log(data);
       $scope.Cameras = data.data;
-      console.log($scope.Cameras);
     });
   };
   $scope.cameraList();
 
   $scope.removeCamera = function(id){ 
-  var myModal = $modal({title : 'Are you sure you want delete selected camera?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
-  myModal.$promise.then(myModal.show);
-  
-  $scope.delete = function() {
-    myModal.$promise.then(myModal.hide);
-    adminService.deleteCamera(id).then(function (data){
-    var index = -1;   
-    var comArr = eval($scope.Cameras);
-    for( var i = 0; i < comArr.length; i++ ) {
-      if(comArr[i].id === id){
-        index = i;
-        break;
-      }
+    var myModal = $modal({title : 'Are you sure you want delete selected camera?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
+    myModal.$promise.then(myModal.show);
+
+    $scope.delete = function() {
+      myModal.$promise.then(myModal.hide);
+      adminService.deleteCamera(id).then(function (data){
+        var index = -1;   
+        var comArr = eval($scope.Cameras);
+        for( var i = 0; i < comArr.length; i++ ) {
+          if(comArr[i].id === id){
+            index = i;
+            break;
+          }
+        }
+        if(index === -1){
+          alert("Something gone wrong");
+        } else {
+          $scope.Cameras.splice(index, 1); 
+          $alert({title: 'Camera deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
+        } 
+      }, function (data){
+        alert("An error ocurred in the database. Please try again.");
+      });  
     }
-    if(index === -1){
-      alert("Something gone wrong");
-    } else {
-      $scope.Cameras.splice(index, 1); 
-      $alert({title: 'Camera deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
-    } 
-  }, function (data){
-    alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
-  });  
   };
 
   $scope.formCameraAllGood = function () {
     if($scope.locationGood && $scope.latitudeGood && $scope.longitudeGood && $scope.ipGood){
       adminService.addCamera($scope.myform.location.$viewValue,$scope.myform.latitude.$viewValue, $scope.myform.longitude.$viewValue, $scope.myform.ip.$viewValue).then(function (response){
         $alert({title: 'New camera added successfully!', placement: 'top', type: 'info', show: true, duration: 2});
-        $scope.userList();
+        $scope.cameraList();
       }, function (response) {
-        alert("Un error ocurrió en la Base de Datos. Por favor vuelva a intentarlo.");
+        alert("An error ocurred in the database. Please try again.");
       });
     }
     else{
       alert("Please complete all fields.");
       return;
     }
+
     $scope.location='';
     $scope.latitude='';
     $scope.longitude='';
     $scope.ip='';
-    return ($scope.usernameGood && $scope.passwordGood && $scope.passwordCGood && $scope.ipGood)
+    $scope.myform.$setPristine();
+    return ($scope.locationGood && $scope.latitudeGood && $scope.longitudeGood && $scope.ipGood)
   };
-  };
+
 }]);

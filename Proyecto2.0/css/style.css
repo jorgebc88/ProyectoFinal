@@ -463,7 +463,7 @@ background-color: #000;
 /**********************************END HOME*******************************************/
 /**********************************STATICS*******************************************/
 #statistics{
-  padding-top: 10rem;
+  padding-top: 5rem;
   background: #F2F2F2;
   width: 100%;
   height: auto;
@@ -535,7 +535,12 @@ background-color: #000;
 /**********************************ADMIN*******************************************/
 #admin{
   padding-top: 10rem;
-  height: 800px;
+  min-height: 900px;
+  width: auto;
+  overflow: hidden;
+}
+.row{
+  background: #F2F2F2;
 }
 .form-group .help-block {
   display: none;

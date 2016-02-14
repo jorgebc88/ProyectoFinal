@@ -36,7 +36,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'pages/statistics.html'
   })
   .when('/stats', {
-    controller: 'statisticsCtrl',
+    controller: 'statsCtrl',
     templateUrl: 'pages/stats.html'
   })
   .when('/admin', {

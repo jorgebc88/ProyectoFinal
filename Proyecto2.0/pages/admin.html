@@ -34,35 +34,35 @@
                     <span class="glyphicon glyphicon-plus"></span> Add New User
                 </button>
                 <div class="panel-collapse" bs-collapse-target>
-                    <form  name="myform" class="form form-horizontal" novalidate>
+                    <form  name="userForm" class="form form-horizontal" novalidate>
                         <div class="well well-lg">
-                            <div class="form-group" ng-class="{'has-error': myform.username.$error.isBlank}">
+                            <div class="form-group" ng-class="{'has-error': userForm.username.$error.isBlank}">
                                 <label for="inputUsername" class="col-sm-4 control-label">Username:</label>
                                 <div class="col-sm-8 controls">
                                     <input type="text" class="form-control" id="inputUsername" name="username" ng-model="username" placeholder="Username" valid-username />
                                     <div class="help-inline">
-                                        <span class="text-danger" ng-if="!!myform.username.$error.isBlank">Username Required.</span>
-                                        <span class="text-danger" ng-if="!!myform.username.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
+                                        <span class="text-danger" ng-if="!!userForm.username.$error.isBlank">Username Required.</span>
+                                        <span class="text-danger" ng-if="!!userForm.username.$error.invalidChars">Username must contain letters &amp; spaces only.</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error': myform.password.$error.isBlank || myform.password.$error.invalidLen}">
+                            <div class="form-group" ng-class="{'has-error': userForm.password.$error.isBlank || userForm.password.$error.invalidLen}">
                                 <label for="inputPassword" class="col-sm-4 control-label">Password:</label>
                                 <div class="col-sm-8 controls">
                                     <input type="text" class="form-control" id="inputPassword" name="password" ng-model="password" placeholder="Password" valid-password />
                                     <div class="help-inline">
-                                        <span class="text-danger" ng-if="!!myform.password.$error.isBlank">Password Required.</span>
-                                        <span class="text-danger" ng-if="!!myform.password.$error.invalidLen">Must be 8-20 characters.</span>
+                                        <span class="text-danger" ng-if="!!userForm.password.$error.isBlank">Password Required.</span>
+                                        <span class="text-danger" ng-if="!!userForm.password.$error.invalidLen">Must be 8-20 characters.</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error': myform.password_c.$error.isBlank || myform.password_c.$error.noMatch}">
+                            <div class="form-group" ng-class="{'has-error': userForm.password_c.$error.isBlank || userForm.password_c.$error.noMatch}">
                                 <label for="password_c" class="col-sm-4 control-label">Confirm Password:</label>
                                 <div class="col-sm-8 controls">
                                     <input type="text" class="form-control" id="password_c" name="password_c" ng-model="password_c" placeholder="Password confirm" valid-password-c/>
                                     <div class="help-inline"> 
-                                        <span class="text-danger" ng-if="!!myform.password_c.$error.isBlank">Confirmation Required.</span>
-                                        <span class="text-danger" ng-if="!!myform.password_c.$error.noMatch">Passwords don't match.</span>
+                                        <span class="text-danger" ng-if="!!userForm.password_c.$error.isBlank">Confirmation Required.</span>
+                                        <span class="text-danger" ng-if="!!userForm.password_c.$error.noMatch">Passwords don't match.</span>
                                     </div>
                                 </div>
                             </div>
@@ -153,10 +153,10 @@
                             <div class="form-group" ng-class="{'has-error': myform.ip.$error.isBlank}">
                                 <label for="inputIp" class="col-sm-2 control-label">Ip:</label>
                                 <div class="col-sm-10 controls">
-                                    <input type="text" class="form-control" id="inputIp" name="ip" ng-model="ip" placeholder="E.g: 192.168.2.100" valid-ip/>
+                                    <input type="text" class="form-control" id="inputIp" name="ip" ng-model="ip" placeholder="E.g: 192.168.2.100:8080" valid-ip/>
                                     <div class="help-inline">
                                         <span class="text-danger" ng-if="!!myform.ip.$error.isBlank">Ip Required.</span>
-                                        <span class="text-danger" ng-if="!!myform.ip.$error.invalidChars">Ip must have the following format: xxx.xxx.xxx.xxx</span>
+                                        <span class="text-danger" ng-if="!!myform.ip.$error.invalidChars">Ip must have the following format: xxx.xxx.xxx.xxx:xxxx</span>
                                     </div>
                                 </div>
                             </div>
