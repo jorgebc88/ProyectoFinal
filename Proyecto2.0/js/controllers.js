@@ -349,7 +349,175 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
   $scope.radioModel = 'Left';
   $scope.showToday= true; 
   $scope.showHour=true;
-  $scope.tab='all';
+  $scope.legend="";
+  $scope.chart = {};
+  $scope.tabs=0;
+
+  $scope.activeTab = function(tabs) {
+    $scope.sundayUp = [];
+    $scope.mondayUp = [];
+    $scope.tuesdayUp = [];
+    $scope.wednesdayUp = [];
+    $scope.thrusdayUp = [];
+    $scope.fridayUp =[];
+    $scope.saturdayUp = [];
+    $scope.sundayDown = [];
+    $scope.mondayDown = [];
+    $scope.tuesdayDown = [];
+    $scope.wednesdayDown = [];
+    $scope.thrusdayDown = [];
+    $scope.fridayDown =[];
+    $scope.saturdayDown = [];
+    if (tabs == 0) {
+      $scope.legend = "All";
+      $scope.colorUp ='#333';
+      $scope.colorDown ='#222';
+      $scope.objectType="All";
+    } else if (tabs == 1) {
+      $scope.legend = "Bikes";
+      $scope.colorUp ='#DD4B39';
+      $scope.colorDown ='#B14336';
+      $scope.objectType="Bike"; 
+    } else if (tabs == 2) {
+      $scope.legend = "Cars";
+      $scope.colorUp ='#00A65A';
+      $scope.colorDown ='#045F35';
+      $scope.objectType="Car"; 
+    } else if (tabs == 3) {
+      $scope.legend = "Buses/Trucks";
+      $scope.colorUp ='#F39C12';
+      $scope.colorDown ='#C67F0F';
+      $scope.objectType="Bus"; 
+    }
+
+    objectService.detectedObject().then(function (data) {
+      var counter = 0;
+      var values = data.data;
+      angular.forEach(values, function (value, key) {
+        if (value.objectType == $scope.objectType || $scope.objectType == 'All') {
+          var date = new Date(value.date);
+          if(date.getDay() == 0) {
+            if (value.direction == "North")
+              $scope.sundayUp.push(value);
+            else
+              $scope.sundayDown.push(value);           
+          }
+          else if(date.getDay() == 1) {
+            if (value.direction == "North")
+              $scope.mondayUp.push(value);
+            else
+              $scope.mondayDown.push(value);           
+          }
+          else if(date.getDay() == 2) {
+            if (value.direction == "North")
+              $scope.tuesdayUp.push(value);
+            else
+              $scope.tuesdayDown.push(value);           
+          }
+          else if(date.getDay() == 3) {
+            if (value.direction == "North")
+              $scope.wednesdayUp.push(value);
+            else
+              $scope.wednesdayDown.push(value);           
+          }
+          else if(date.getDay() == 4) {
+            if (value.direction == "North")
+              $scope.thrusdayUp.push(value);
+            else
+              $scope.thrusdayDown.push(value);           
+          }
+          else if(date.getDay() == 5) {
+            if (value.direction == "North")
+              $scope.fridayUp.push(value);
+            else
+              $scope.fridayDown.push(value);           
+          }
+          else if(date.getDay() == 6) {
+            if (value.direction == "North")
+              $scope.saturdayUp.push(value);
+            else
+              $scope.saturdayDown.push(value);           
+          }
+          counter++;
+        }
+      });
+      $scope.chart.type = "ColumnChart";
+      $scope.chart.cssStyle = "height:400px; width:auto;";
+      $scope.chart.options = {
+        "isStacked": "true",
+        "displayExactValues": true,
+        "vAxis": {
+          "gridlines": {
+            "count": 10
+          }
+        },
+        "hAxis": {
+        },
+        "tooltip": {
+          "isHtml": false
+        },
+        "allowHtml": true,
+        "backgroundColor":"transparent",
+        "legend":"none",
+        "chartArea": {"width":'90%',"height":'80%'},
+        "colors":[$scope.colorDown, $scope.colorUp]
+      };
+      $scope.chart.data = {
+        "cols": [
+                  {"id": "month","label": "Month","type": "string","p": {}},
+                  {"id":   $scope.legend,"label":  $scope.legend + "-Up" ,"type": "number","p": {}},
+                  {"id":   $scope.legend,"label":  $scope.legend + "-Down" ,"type": "number","p": {}}
+        ],
+        "rows": [
+          {
+            "c": [
+              {"v": "Sunday"},
+              {"v": $scope.sundayUp.length},
+              {"v": $scope.sundayDown.length},
+              null
+            ]
+          },{
+            "c": [
+              {"v": "Monday"},
+              {"v": $scope.mondayUp.length},
+              {"v": $scope.mondayDown.length},
+              null
+            ]
+          },{
+            "c": [
+              {"v": "Tuesday"},
+              {"v": $scope.tuesdayUp.length},
+              {"v": $scope.tuesdayDown.length},
+              null
+            ]
+          },{
+            "c": [
+              {"v": "Wednesday"},
+              {"v": $scope.wednesdayUp.length},
+              {"v": $scope.wednesdayDown.length},
+              null
+            ]
+          },{
+            "c": [
+              {"v": "Thrusday"},
+              {"v": $scope.thrusdayUp.length},
+              {"v": $scope.thrusdayDown.length},
+              null
+            ]
+          },{
+            "c": [
+              {"v": "Saturday"},
+              {"v": $scope.fridayUp.length},
+              {"v": $scope.fridayDown.length},
+              null
+            ]
+          }
+        ]
+      };
+    });
+  };
+  $scope.activeTab(0);
+
   $scope.today = function() {
     $scope.dt = new Date();
     $scope.dt2 = new Date();
@@ -408,126 +576,6 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
   };
   $scope.flag = 0; 
   $scope.objectDetected = [];
-  $scope.sunday = [];
-  $scope.monday = [];
-  $scope.tuesday = [];
-  $scope.wednesday = [];
-  $scope.thrusday = [];
-  $scope.friday =[];
-  $scope.saturday = [];
-  $scope.chart = {};
-  objectService.detectedObject().then(function (data){
-      var counter = 0;
-      var values = data.data;
-      console.log(data.data);
-      angular.forEach(values, function (value, key) {
-        var date = new Date(value.date);
-
-        if(date.getDay() == 0) {
-          $scope.sunday.push(value);
-        }
-        else if(date.getDay() == 1) {
-          $scope.monday.push(value);
-        }
-        else if(date.getDay() == 2) {
-          $scope.tuesday.push(value);
-        }
-        else if(date.getDay() == 3) {
-          $scope.wednesday.push(value);
-        }
-        else if(date.getDay() == 4) {
-          $scope.thrusday.push(value);
-        }
-        else if(date.getDay() == 5) {
-          $scope.friday.push(value);
-        }
-        else if(date.getDay() == 6) {
-          $scope.saturday.push(value);
-        }
-        counter++;
-      });
-    });
-
-  $scope.chart.type = "ColumnChart";
-  $scope.chart.cssStyle = "height:400px; width:auto;";
-  $scope.chart.options = {
-    "isStacked": "true",
-    "fill": 2,
-    "displayExactValues": true,
-    "vAxis": {
-      "gridlines": {
-        "count": 10
-      }
-    },
-    "hAxis": {
-    },
-    "tooltip": {
-      "isHtml": false
-    },
-    "allowHtml": true,
-    "backgroundColor":"transparent",
-    "legend":"none",
-    "chartArea": {"width":'90%',"height":'80%'},
-    "colors":['#333','#222']
-  };
-
-  $scope.chart.data = {
-  "cols": [
-    {"id": "month","label": "Month","type": "string","p": {}},
-    {"id": "people-id","label": "People-Up","type": "number","p": {}},
-    {"id": "people-id","label": "People-Down","type": "number","p": {}}
-  ],
-  "rows": [
-      {
-        "c": [
-              {"v": "Sun"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      },
-      {
-        "c": [
-              {"v": "Mon"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      },
-      {
-        "c": [
-              {"v": "Tue"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      },
-      {
-        "c": [
-              {"v": "Wed"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      },
-      {
-        "c": [
-              {"v": "Thr"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      },
-      {
-        "c": [
-              {"v": "Sat"},
-              {"v": 234,"f": "Up"},
-              {"v": 234,"f": "Down"},
-              null
-              ]
-      }
-  ]
-};
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
@@ -645,5 +693,4 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
     $scope.myform.$setPristine();
     return ($scope.locationGood && $scope.latitudeGood && $scope.longitudeGood && $scope.ipGood)
   };
-
 }]);

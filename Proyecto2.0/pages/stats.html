@@ -1,6 +1,6 @@
 <div id="statistics">
-  <div bs-tabs>
-  <div title="All" name="All" bs-pane>
+  <div bs-active-pane="tabs" ng-click="activeTab(tabs)" bs-tabs>
+  <div title="All" bs-pane>
     <div class="Back form-group"><br>
       <div class="container">
         <img class="imgIcon" src="img/all.png" alt="All">
@@ -9,16 +9,7 @@
       </div>
     </div>
   </div>
-  <div title="People" name="People"  bs-pane>
-    <div class="Back form-group"><br>
-      <div class="container">
-        <img class="imgIcon" src="img/man23.png" alt="People">
-        <strong> People</strong>
-        <div google-chart chart="chart" style="{{chart.cssStyle}}"></div>
-      </div>
-    </div>
-  </div>
-  <div title="Motorcycles" name="" bs-pane>
+  <div title="Motorcycles" bs-pane>
     <div class="Back form-group"><br>
       <div class="container">
         <img class="imgIcon" src="img/vintage15.png" alt="Motorcylce">
@@ -36,7 +27,7 @@
       </div>
     </div>
   </div>
-  <div title="Buses/Trucks" name="" bs-pane>
+  <div title="Buses/Trucks" bs-pane>
     <div class="Back form-group"><br>
       <div class="container">
         <img class="imgIcon" src="img/bus55.png" alt="Buses/Trucks">
