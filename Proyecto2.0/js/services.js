@@ -61,8 +61,13 @@ app.service('objectService', ['$http', function ($http){
     return $http.get('http://localhost:8080/FinalProject/detectedObject/requestDetectedObject');
   };
 
+  var searchObjects = function(startDate, endDate) {
+    return $http.get('http://localhost:8080/FinalProject/detectedObject/requestDetectedObjectByDatesBetweenAndCameraId?startDate=' + startDate + '&endDate=' + endDate + '&cameraId=' + 1);
+  };
+
   return {
-    detectedObject : detectedObject
+    detectedObject : detectedObject,
+    searchObjects : searchObjects
   }
 
 }]);

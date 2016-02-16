@@ -347,7 +347,6 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
   $scope.selectedTimeAsString = '10:00';
   $scope.sharedDate = new Date(new Date().setMinutes(0));
   $scope.radioModel = 'Left';
-  $scope.showToday= true; 
   $scope.showHour=true;
   $scope.legend="";
   $scope.chart = {};
@@ -358,14 +357,14 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
     $scope.mondayUp = [];
     $scope.tuesdayUp = [];
     $scope.wednesdayUp = [];
-    $scope.thrusdayUp = [];
+    $scope.thursdayUp = [];
     $scope.fridayUp =[];
     $scope.saturdayUp = [];
     $scope.sundayDown = [];
     $scope.mondayDown = [];
     $scope.tuesdayDown = [];
     $scope.wednesdayDown = [];
-    $scope.thrusdayDown = [];
+    $scope.thursdayDown = [];
     $scope.fridayDown =[];
     $scope.saturdayDown = [];
     if (tabs == 0) {
@@ -422,9 +421,9 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
           }
           else if(date.getDay() == 4) {
             if (value.direction == "North")
-              $scope.thrusdayUp.push(value);
+              $scope.thursdayUp.push(value);
             else
-              $scope.thrusdayDown.push(value);           
+              $scope.thursdayDown.push(value);           
           }
           else if(date.getDay() == 5) {
             if (value.direction == "North")
@@ -499,9 +498,9 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
             ]
           },{
             "c": [
-              {"v": "Thrusday"},
-              {"v": $scope.thrusdayUp.length},
-              {"v": $scope.thrusdayDown.length},
+              {"v": "Thursday"},
+              {"v": $scope.thursdayUp.length},
+              {"v": $scope.thursdayDown.length},
               null
             ]
           },{
@@ -574,8 +573,47 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
   $scope.clear = function() {
     $scope.mytime = null;
   };
-  $scope.flag = 0; 
-  $scope.objectDetected = [];
+
+  $scope.showToday = true;
+  $scope.showDay = false;
+  $scope.showRange = false;
+  
+  $scope.search = function () {
+    $scope.startDay = new Date();
+    $scope.endDay = new Date();
+    if ($scope.showToday) {
+      console.log(1);
+        $scope.startDay = $scope.Today;
+        $scope.endDay = $scope.Today;
+    } 
+    else if ($scope.showDay) {
+      console.log(2);
+        $scope.startDay = $scope.selectedDate;
+        $scope.endDay = $scope.selectedDate;
+    }
+    else if ($scope.showRange) {
+      console.log(3);
+        $scope.startDay = $scope.fromDate;
+        $scope.endDay = $scope.untilDate;
+    }
+
+    var startDate = new Date();
+    startDate = $scope.startDay;
+    startDate.setHours($scope.fromTime.getHours());
+    startDate.setMinutes($scope.fromTime.getMinutes());
+    
+    var endDate = new Date();
+    endDate = $scope.endDay;
+    endDate.setHours($scope.toTime.getHours());
+    endDate.setMinutes($scope.toTime.getMinutes());
+    
+    objectService.searchObjects(startDate, endDate).then(function (data) {
+      console.log(data);
+    });
+
+  };
+
+
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
