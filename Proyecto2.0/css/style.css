@@ -528,6 +528,9 @@ background-color: #000;
   color : #000;
   text-decoration: none;
 }
+.dropdown-whiteColor .dropdown-menu {
+  background-color: #fff !important;
+}
 /**********************************END STATICS*******************************************/
 /**********************************INFO*******************************************/
 
