@@ -1,6 +1,6 @@
 {
   "name": "jquery-sse",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/byjg/jquery-sse",
   "authors": [
     "Joao Gilberto Magalhaes <joao@byjg.com.br>"
@@ -29,14 +29,14 @@
     "*.md",
     "examples"
   ],
-  "_release": "0.1.1",
+  "_release": "0.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.1",
-    "commit": "2892c22932f78f78d4c54506b95df750bbe3ac0b"
+    "tag": "v0.1.2",
+    "commit": "a5b5f98a55f45cc102dc2814b34e95f414f4ea1d"
   },
   "_source": "git://github.com/byjg/jquery-sse.git",
-  "_target": "~0.1.1",
+  "_target": "^0.1.2",
   "_originalSource": "jquery-sse",
   "_direct": true
 }

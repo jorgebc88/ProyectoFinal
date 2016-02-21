@@ -1,4 +1,4 @@
-var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate','googlechart','duScroll','ngOboe', 'mgcrea.ngStrap']);
+var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap']);
 
 app.controller('indexCtrl',['$scope','$cookieStore','$location','userConService','$http', '$modal', '$aside', function ($scope,$cookieStore,$location,userConService,$http,$modal,$aside){  
   var myOtherAside = $aside({scope: $scope, show: false, template: 'pages/menu.html', animation: "am-fade-and-slide-left", placement: "left"});
@@ -162,125 +162,38 @@ for (var i=0; i<1; i++) {
 }
 }]).value('duScrollOffset', 30);
 
-app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function ($scope,$http,Oboe,$location) { 
-  $scope.flag = 0; 
+app.controller("statisticsCtrl",['$scope','$http','$location', function ($scope,$http,$location) { 
+  $scope.colours = [
+    { // red
+        fillColor: "rgba(221,75,57,0.2)",
+        strokeColor: "rgba(221,75,57,1)",
+        pointColor: "rgba(221,75,57,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(221,75,57,0.8)"
+    }, 
+    { // green
+        fillColor: "rgba(0,166,90,0.2)",
+        strokeColor: "rgba(0,166,90,1)",
+        pointColor: "rgba(0,166,90,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(0,166,90,0.8)"
+    },
+    { // yellow
+        fillColor: "rgba(243,156,18,0.2)",
+        strokeColor: "rgba(243,156,18,1)",
+        pointColor: "rgba(243,156,18,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(243,156,18,0.8)"
+    }];
   $scope.objectDetected = [];
-  $scope.chart = {};
-  $scope.chart.type = "PieChart";
-  $scope.chart.cssStyle = "height:400px; width:auto;";
-  $scope.chart.formatters = {};
-  $scope.clickAll = function () {
-    $scope.flag = 0;
-    $scope.chart.data = [
-    ['Object', 'Quantity'],
-    ['Bikes', $scope.bike],
-    ['Cars', $scope.car],
-    ['Buses/Trucks', $scope.bus],
-    ];
-    $scope.chart.options = {
-      "isStacked": "true",
-      "fill": 20,
-      "displayExactValues": true,
-      "backgroundColor":"transparent",
-      "vAxis": {
-        "title": "Sales unit", "gridlines": {"count": 6}
-      },
-      "hAxis": {
-        "title": "Date"
-      },
-      "pieHole": 0.4,
-      "slices": {
-        0: { color: '#DD4B39' },
-        1: { color: '#00A65A' },
-        2: { color: '#F39C12' },
-      },
-      "legend":"none",
-      "chartArea":{"width":'90%',"height":'90%'}
-    };
+  $scope.options = {
+    responsive : true,
   };
-  $scope.clickAll();
-  $scope.clickBike = function () {
-    $scope.flag = 2;
-    $scope.chart.data = [
-    ['Object', 'Quantity'],
-    ['Bikes-Down', $scope.bikeDown],
-    ['Bikes-Up', $scope.bikeUp],
-    ];
-    $scope.chart.options = {
-      "isStacked": "true",
-      "fill": 20,
-      "displayExactValues": true,
-      "backgroundColor":"transparent",
-      "vAxis": {
-        "title": "Sales unit", "gridlines": {"count": 6}
-      },
-      "hAxis": {
-        "title": "Date"
-      },
-      "pieHole": 0.4,
-      "slices": {
-        0: { color: '#DD4B39' },
-        1: { color: '#B14336' },
-      },
-      "legend":"none",
-      "chartArea":{"width":'90%',"height":'90%'}
-    };
-  };
-  $scope.clickCar = function () {
-    $scope.flag = 3;
-    $scope.chart.data = [
-    ['Object', 'Quantity'],
-    ['Cars-Down', $scope.carDown],
-    ['Cars-Up', $scope.carUp],
-    ];
-    $scope.chart.options = {
-      "isStacked": "true",
-      "fill": 20,
-      "displayExactValues": true,
-      "backgroundColor":"transparent",
-      "vAxis": {
-        "title": "Sales unit", "gridlines": {"count": 6}
-      },
-      "hAxis": {
-        "title": "Date"
-      },
-      "pieHole": 0.4,
-      "slices": {
-        0: { color: '#00A65A' },
-        1: { color: '#045F35' },
-      },
-      "legend":"none",
-      "chartArea":{"width":'90%',"height":'90%'}
-    };
-  };
-  $scope.clickBus = function () {
-    $scope.flag = 4;
-    $scope.chart.data = [
-    ['Object', 'Quantity'],
-    ['Buses/Trucks-Down', $scope.busDown],
-    ['Buses/Trucks-Up', $scope.busUp],
-    ];
-    $scope.chart.options = {
-      "isStacked": "true",
-      "fill": 20,
-      "displayExactValues": true,
-      "backgroundColor":"transparent",
-      "vAxis": {
-        "title": "Sales unit", "gridlines": {"count": 6}
-      },
-      "hAxis": {
-        "title": "Date"
-      },
-      "pieHole": 0.4,
-      "slices": {
-        0: { color: '#F39C12' },
-        1: { color: '#C67F0F' },
-      },
-      "legend":"none",
-      "chartArea":{"width":'90%',"height":'90%'}
-    };
-  };
-  $scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
+
+  $scope.sse = $.SSE('http://192.168.2.120:8080/REST-API/detectedObject/serverSentEvents?cameraId=2', {
     onOpen: function(e){  
     },
     onEnd: function(e){ 
@@ -290,55 +203,22 @@ app.controller("statisticsCtrl",['$scope','$http','Oboe','$location', function (
     },
     onMessage: function(e){ 
       $scope.objectDetected = angular.fromJson(e.data);
-      $scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
-      $scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
-      $scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
-      $scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
-      $scope.carDown = $scope.objectDetected.detectedObject[0].car;
-      $scope.busDown = $scope.objectDetected.detectedObject[0].bus;
-      $scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
-      $scope.carUp = $scope.objectDetected.detectedObject[1].car;
-      $scope.busUp = $scope.objectDetected.detectedObject[1].bus;
+      $scope.bike = $scope.objectDetected.detectedObject[0].bike;
+      $scope.car = $scope.objectDetected.detectedObject[0].car;
+      $scope.bus = $scope.objectDetected.detectedObject[0].bus;
       if ($location.path() != "/statistics"){
         $scope.sse.stop();
       }
       $scope.$apply(function () {
-        if($scope.flag == 0){
-          $scope.chart.data = [
-          ['Object', 'Quantity'],
-          ['Bikes', $scope.bike],
-          ['Cars', $scope.car],
-          ['Buses/Trucks', $scope.bus],
-          ];
-        }
-        else if($scope.flag == 2){
-          $scope.chart.data = [
-          ['Object', 'Quantity'],
-          ['Bikes-Down', $scope.bikeDown],
-          ['Bikes-Up', $scope.bikeUp],
-          ];
-        }
-        else if($scope.flag == 3){
-          $scope.chart.data = [
-          ['Object', 'Quantity'],
-          ['Cars-Down', $scope.carDown],
-          ['Cars-Up', $scope.carUp],
-          ];
-        }
-        else if($scope.flag == 4){
-          $scope.chart.data = [
-          ['Object', 'Quantity'],
-          ['Buses/Trucks-Down', $scope.busDown],
-          ['Buses/Trucks-Up', $scope.busUp],
-          ];
-        }        
+        $scope.labels = ["Bikes", "Cars", "Buses/Trucks"];
+        $scope.data = [$scope.bike, $scope.car, $scope.bus];
       });
     }    
   });
 $scope.sse.start();
 }]);
 
-app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService', '$filter', function ($scope,$http,Oboe,$location,objectService,$filter) { 
+app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$filter', function ($scope,$http,$location,objectService,$filter) { 
   $scope.Today = new Date();
   $scope.maxDate= new Date();
   $scope.fromTime = new Date();
@@ -352,7 +232,6 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
   $scope.radioModel = 'Left';
   $scope.showHour=true;
   $scope.legend="";
-  $scope.chart = {};
   $scope.tabs=0;
 
   $scope.today = function() {
@@ -436,35 +315,94 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
     $scope.endDay.setMinutes($scope.toTime.getMinutes());
 
     objectService.searchObjects($scope.startDay, $scope.endDay).then(function (data) {
-      $scope.draw(0, data);
+      $scope.draw($scope.tabs, data);
     }, function(){
+      $scope.draw($scope.tabs, 0);
     });
   };
-
+  
   objectService.detectedObject().then(function (data) {
     $scope.draw(0, data);
   });
-
+  
   $scope.draw = function (tabs, data) {
-    if (tabs == 0) {
+
+    $scope.tabs = tabs;
+    if ($scope.tabs == 0) {
       $scope.legend = "All";
-      $scope.colorUp ='#333';
-      $scope.colorDown ='#222';
+      $scope.colorUp = { // grey
+        fillColor: "rgba(51,3,0,0.2)",
+        strokeColor: "rgba(51,3,0,1)",
+        pointColor: "rgba(51,3,0,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(51,3,0,0.8)"
+      };
+      $scope.colorDown = { // grey
+        fillColor: "rgba(34,2,0,0.2)",
+        strokeColor: "rgba(34,2,0,1)",
+        pointColor: "rgba(34,2,0,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(34,2,0,0.8)"
+      };
       $scope.objectType ="All";
-    } else if (tabs == 1) {
+    } else if ($scope.tabs == 1) {
       $scope.legend = "Bikes";
-      $scope.colorUp ='#DD4B39';
-      $scope.colorDown ='#B14336';
+      $scope.colorUp = {
+        fillColor: "rgba(221,77,51,0.2)",
+        strokeColor: "rgba(221,77,51,1)",
+        pointColor: "rgba(221,77,51,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(221,77,51,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(177,67,54,0.2)",
+        strokeColor: "rgba(177,67,54,1)",
+        pointColor: "rgba(177,67,54,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(177,67,54,0.8)"
+      };
       $scope.objectType="Bike"; 
-    } else if (tabs == 2) {
+    } else if ($scope.tabs == 2) {
       $scope.legend = "Cars";
-      $scope.colorUp ='#00A65A';
-      $scope.colorDown ='#045F35';
+      $scope.colorUp = {
+        fillColor: "rgba(0,166,90,0.2)",
+        strokeColor: "rgba(0,166,90,1)",
+        pointColor: "rgba(0,166,90,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(0,166,90,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(4,95,53,0.2)",
+        strokeColor: "rgba(4,95,53,1)",
+        pointColor: "rgba(4,95,53,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(4,95,53,0.8)"
+      };
       $scope.objectType="Car"; 
-    } else if (tabs == 3) {
+    } else if ($scope.tabs == 3) {
       $scope.legend = "Buses/Trucks";
-      $scope.colorUp ='#F39C12';
-      $scope.colorDown ='#C67F0F';
+      $scope.colorUp = {
+        fillColor: "rgba(243,156,18,0.2)",
+        strokeColor: "rgba(243,156,18,1)",
+        pointColor: "rgba(243,156,18,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(243,156,18,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(198,127,15,0.2)",
+        strokeColor: "rgba(198,127,15,1)",
+        pointColor: "rgba(198,127,15,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(198,127,15,0.8)"
+      };
       $scope.objectType="Bus"; 
     }
 
@@ -482,11 +420,12 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
     $scope.thursdayDown = [];
     $scope.fridayDown =[];
     $scope.saturdayDown = [];
+    $scope.data = [];
 
     if(angular.isDefined(data)){
       $scope.values = data.data;
     }
-
+   
     angular.forEach($scope.values, function (value, key) {
       if (value.objectType == $scope.objectType || $scope.objectType == 'All') {
         var date = new Date(value.date);
@@ -534,81 +473,14 @@ app.controller('statsCtrl',['$scope','$http','Oboe','$location', 'objectService'
         }
       }
     });
-
-    $scope.chart.type = "ColumnChart";
-    $scope.chart.cssStyle = "height:400px; width:auto;";
-    $scope.chart.options = {
-      "isStacked": "true",
-      "displayExactValues": true,
-      "vAxis": {
-        "gridlines": {
-          "count": 10
-        }
-      },
-      "hAxis": {
-      },
-      "tooltip": {
-        "isHtml": false
-      },
-      "allowHtml": true,
-      "backgroundColor":"transparent",
-      "legend":"none",
-      "chartArea": {"width":'90%',"height":'80%'},
-      "colors":[$scope.colorDown, $scope.colorUp]
-    };
-    $scope.chart.data = {
-      "cols": [
-      {"id": "month","label": "Month","type": "string","p": {}},
-      {"id":   $scope.legend,"label":  $scope.legend + "-Up" ,"type": "number","p": {}},
-      {"id":   $scope.legend,"label":  $scope.legend + "-Down" ,"type": "number","p": {}}
-      ],
-      "rows": [
-      {
-        "c": [
-        {"v": "Sunday"},
-        {"v": $scope.sundayUp.length},
-        {"v": $scope.sundayDown.length},
-        null
-        ]
-      },{
-        "c": [
-        {"v": "Monday"},
-        {"v": $scope.mondayUp.length},
-        {"v": $scope.mondayDown.length},
-        null
-        ]
-      },{
-        "c": [
-        {"v": "Tuesday"},
-        {"v": $scope.tuesdayUp.length},
-        {"v": $scope.tuesdayDown.length},
-        null
-        ]
-      },{
-        "c": [
-        {"v": "Wednesday"},
-        {"v": $scope.wednesdayUp.length},
-        {"v": $scope.wednesdayDown.length},
-        null
-        ]
-      },{
-        "c": [
-        {"v": "Thursday"},
-        {"v": $scope.thursdayUp.length},
-        {"v": $scope.thursdayDown.length},
-        null
-        ]
-      },{
-        "c": [
-        {"v": "Saturday"},
-        {"v": $scope.fridayUp.length},
-        {"v": $scope.fridayDown.length},
-        null
-        ]
-      }
-      ]
-    };
-  };  
+    $scope.labels = ['Sunday', 'Monday', 'Thursday', 'Wednesday', 'Tuesday', 'Friday', 'Saturday'];
+    $scope.series = [$scope.legend + '-Up', $scope.legend + '-Down'];
+    $scope.data = [
+      [$scope.sundayUp.length, $scope.mondayUp.length, $scope.tuesdayUp.length, $scope.wednesdayUp.length, $scope.thursdayUp.length, $scope.fridayUp.length, $scope.saturdayUp.length],
+      [$scope.sundayDown.length, $scope.mondayDown.length, $scope.tuesdayDown.length, $scope.wednesdayDown.length, $scope.thursdayDown.length, $scope.fridayDown.length, $scope.saturdayDown.length]
+    ];
+    $scope.colours = [$scope.colorUp, $scope.colorDown];
+  }
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
