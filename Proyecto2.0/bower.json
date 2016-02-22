@@ -27,6 +27,13 @@
     "Chart.js": "^1.0.2",
     "angular-chart.js": "^0.8.8",
     "bootstrap-additions": "^0.3.1",
-    "angular-motion": "^0.4.3"
+    "angular-motion": "^0.4.3",
+    "datatables.net": "^1.10.11",
+    "datatables.net-bs": "^1.10.11",
+    "angular-datatables": "^0.5.3",
+    "datatables.net-select-bs": "^1.1.2",
+    "datatables.net-select": "^1.1.2",
+    "datatables.net-buttons": "^1.1.2",
+    "datatables.net-buttons-bs": "^1.1.2"
   }
 }

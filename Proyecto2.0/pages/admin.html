@@ -3,28 +3,23 @@
         <div class="container col-xs-12 col-md-6">
             <div class="container col-xs-12">
                 <h1>User list</h1>
-                <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
+                <table id="table" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr class="info">
-                            <th class="col-xs-1 text-center">#</th>
-                            <th class="col-xs-3 text-right">User name</th>
-                            <th class="col-xs-4 text-right">Password</th>
-                            <th class="col-xs-2 text-center">Level</th>
-                            <th class="col-xs-2 text-center">Delete</th>
+                            <th></th>
+                            <th ng-hide="true"></th>
+                            <th class="text-center">User name</th>
+                            <th class="text-center">Password</th>
+                            <th class="text-center">Level</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in Users" class="user-listing">
-                            <td class="text-center alignMiddle">{{$index + 1}}</td>
-                            <td class="alignMiddle">{{user.userName}}</td>
-                            <td class="alignMiddle">{{user.password}}</td>
-                            <td class="text-center alignMiddle">{{user.level}}</td>
-                            <td class="text-center alignMiddle">
-                                <button ng-disabled="{{user.level == 1}}" type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeUser(user.userId)">
-                                    <span class="glyphicon glyphicon-trash"></span> 
-                                    <span class="hidden-xs"></span>
-                                </button>
-                            </td>
+                        <tr ng-repeat="user in Users" class="text-right">
+                            <td></td>
+                            <td ng-hide="true">{{user.userId}}</td>
+                            <td>{{user.userName}}</td>
+                            <td>{{user.password}}</td>
+                            <td>{{user.level}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,7 +65,7 @@
                                 <label for="level" class="col-sm-4 control-label">Level:</label>
                                 <div class="col-sm-4">
                                     <select id="level" name="level" ng-model="level" class="form-control" >
-                                        <option value="1" selected="true">1.Admin</option>
+                                        <option value="1" ng-selected="level">1.Admin</option>
                                         <option value="2">2.User</option>
                                     </select>
                                 </div>
@@ -88,30 +83,29 @@
         <div class="container col-xs-12 col-md-6">
             <div class="container col-xs-12">
                 <h1>Camera list</h1>
-                <table class="table table-bordered table-hover text-right" style="vertical-align:middle;">
+                <table id="cameraTable" datatable="ng" dt-options="dtOptions2" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr class="info">
-                            <th class="col-xs-1 text-center">#</th>
-                            <th class="col-xs-3 text-right">Location</th>
-                            <th class="col-xs-2 text-right">Latitude</th>
-                            <th class="col-xs-2 text-right">Longitude</th>
-                            <th class="col-xs-2 text-center">Ip</th>
-                            <th class="col-xs-2 text-center">Delete</th>
+                            <th></th>
+                            <th ng-hide="true"></th>
+                            <th ng-hide="true"></th>
+                            <th class="text-center">Location</th>
+                            <th class="text-center">Latitude</th>
+                            <th class="text-center">Longitude</th>
+                            <th class="text-center">Ip</th>
+                            <th class="text-center">Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="camera in Cameras" class="user-listing">
-                            <td class="text-center alignMiddle">{{$index + 1}}</td>
-                            <td class="alignMiddle">{{camera.location}}</td>
-                            <td class="alignMiddle">{{camera.latitude}}</td>
-                            <td class="alignMiddle">{{camera.longitude}}</td>
-                            <td class="text-center alignMiddle">{{camera.ip}}</td>
-                            <td class="text-center alignMiddle">
-                                <button type="button" class="btn btn-danger" aria-label="Left Align" ng-click="removeCamera(camera.id)">
-                                    <span class="glyphicon glyphicon-trash"></span> 
-                                    <span class="hidden-xs"></span>
-                                </button>
-                            </td>
+                        <tr ng-repeat="camera in Cameras" class="text-right">
+                            <td></td>
+                            <td ng-hide="true">{{camera.id}}</td>
+                            <td ng-hide="true">{{camera.active}}</td>
+                            <td>{{camera.location}}</td>
+                            <td>{{camera.latitude}}</td>
+                            <td>{{camera.longitude}}</td>
+                            <td>{{camera.ip}}</td>
+                            <td class="text-center"><input type="checkbox" ng-checked="{{camera.active}}" disabled></td>
                         </tr>
                     </tbody>
                 </table>
@@ -158,6 +152,15 @@
                                         <span class="text-danger" ng-if="!!myform.ip.$error.isBlank">Ip Required.</span>
                                         <span class="text-danger" ng-if="!!myform.ip.$error.invalidChars">Ip must have the following format: xxx.xxx.xxx.xxx:xxxx</span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="activeCamera" class="col-sm-2 control-label">Level:</label>
+                                <div class="col-sm-4">
+                                    <select id="activeCamera" name="activeCamera" ng-model="activeCamera" class="form-control" >
+                                        <option value="1" ng-selected="activeCamera">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group form-actions" ng-click="formCameraAllGood()">

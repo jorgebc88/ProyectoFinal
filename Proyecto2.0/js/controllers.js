@@ -1,4 +1,4 @@
-var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap']);
+var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap','datatables', 'datatables.select', 'datatables.buttons', 'datatables.bootstrap']);
 
 app.controller('indexCtrl',['$scope','$cookieStore','$location','userConService','$http', '$modal', '$aside', function ($scope,$cookieStore,$location,userConService,$http,$modal,$aside){  
   var myOtherAside = $aside({scope: $scope, show: false, template: 'pages/menu.html', animation: "am-fade-and-slide-left", placement: "left"});
@@ -33,7 +33,7 @@ $scope.showModal = function() {
   myOtherModal.$promise.then(myOtherModal.show);
 };
 $scope.logout = function(){
-$http.get('http://localhost:8080/FinalProject/user/logout');//http://192.168.2.108:8080
+$http.get('http://localhost:8080/REST-API/user/logout');//http://192.168.2.108:8080
 $scope.userConnected = {'name': "", 'level': "", 'connected':""};
 $cookieStore.remove('connected');
 $cookieStore.remove('level');
@@ -63,7 +63,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   $scope.login = function (){
     var userName = $scope.userName;
     var password = $scope.password;
-    var usr = $http.post('http://localhost:8080/FinalProject/user/login', {"userName": userName, "password": password})
+    var usr = $http.post('http://localhost:8080/REST-API/user/login', {"userName": userName, "password": password})
     .then(function(response) {
       session.resolve(response.data);
     },function(response) {
@@ -103,7 +103,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
 
 app.controller('homeCtrl',['$scope', '$document', '$http', '$location', function ($scope, $document, $http, $location) {
 
-  $scope.sse = $.SSE('http://localhost:8080/FinalProject/detectedObject/serverSentEvents', {
+  $scope.sse = $.SSE('http://localhost:8080/REST-API/detectedObject/serverSentEvents', {
     onOpen: function(e){  
     },
     onEnd: function(e){ 
@@ -483,8 +483,63 @@ app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$fil
   }
 }]);
 
-app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', function ($scope, adminService, $modal, $alert) {
+app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', 'DTOptionsBuilder', 'DTDefaultOptions', 'DTColumnDefBuilder', function ($scope, adminService, $modal, $alert, DTOptionsBuilder, DTDefaultOptions, DTColumnDefBuilder) {
   $scope.isCollapsedAdd = false;
+  $scope.dtOptions = DTOptionsBuilder.newOptions()
+    .withSelect({
+      style: 'multi',
+      selector: 'td',
+      info: false
+    })
+    .withOption('order', [[1, 'asc']])
+    .withOption('searching', false)
+    .withOption('paging', false)
+    .withButtons([{
+      text: '<span class="glyphicon glyphicon-trash"></span> Delete Users',
+      className :'btn btn-danger',
+      action: function ( e, dt ) {
+              $scope.values = dt.rows({ selected: true }).data();
+              var count = dt.rows( { selected: true } ).indexes().length;
+              if(count > 0) {
+                $scope.removeUser($scope.values);
+              } else {
+                 $modal({title: 'Can not perform action, please select one element',  animation: 'am-fade-and-scale',
+                placement: 'center'});
+              }
+      }
+    }]);
+
+    $scope.dtOptions2 = DTOptionsBuilder.newOptions()
+    .withSelect({
+      style: 'multi',
+      selector: 'td',
+      info: false
+    })
+    .withOption('order', [[1, 'asc']])
+    .withOption('searching', false)
+    .withOption('paging', false)
+    .withButtons([{
+      text: '<span class="glyphicon glyphicon-facetime-video"></span> Enable/Disable Cameras',
+      className :'btn btn-success',
+      action: function ( e, dt ) {
+              $scope.values = dt.rows({ selected: true }).data();
+              var count = dt.rows( { selected: true } ).indexes().length;
+              if(count > 0) {
+                $scope.activeCamera($scope.values);
+              } else {
+                 $modal({title: 'Can not perform action, please select one element', animation: 'am-fade-and-scale',
+                placement: 'center'});
+              }
+      }
+    }]);
+
+    $scope.dtColumnDefs = [
+      DTColumnDefBuilder.newColumnDef(0)
+      .notSortable()
+      .withClass('select-checkbox')
+      .renderWith(function() {return '';})
+    ];
+
 
   $scope.userList = function () {
     adminService.userList().then(function (data){
@@ -493,31 +548,26 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
   };
   $scope.userList();
 
-  $scope.removeUser = function(id){ 
-    var myOtherModal = $modal({title : 'Are you sure you want delete selected user?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
+  $scope.removeUser = function(data){ 
+    var myOtherModal = $modal({title : 'Are you sure you want to delete the selection?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
     myOtherModal.$promise.then(myOtherModal.show);
 
     $scope.delete = function() {
+      var counter = 0;
+      var length = data.length;
       myOtherModal.$promise.then(myOtherModal.hide);
-      adminService.deleteUser(id).then(function (data){
-        var index = -1;   
-        var comArr = eval( $scope.Users);
-        for( var i = 0; i < comArr.length; i++ ) {
-          if(comArr[i].userId === id){
-            index = i;
-            console.log(index);
-            break;
-          }
-        }
-        if(index === -1){
-          alert("Something gone wrong");
-        } else {
-          $scope.Users.splice(index, 1); 
-          $alert({title: 'User deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
-        } 
-      }, function (data){
-        alert("An error ocurred in the database. Please try again.");
-      });  
+      angular.forEach(data, function(data, key) {
+        var id = data[1];
+        adminService.deleteUser(id).then(function (data){
+          counter++;
+          if (counter == length) {
+            $alert({title: 'Selection deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2}); 
+            $scope.userList();
+          } 
+        }, function (data) {
+          alert("An error ocurred in the database. Please try again.");
+        });
+      });
     };
   };
 
@@ -544,42 +594,38 @@ app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', funct
   };
 
   $scope.cameraList = function () {
-    adminService.cameraList().then(function (data){
+    adminService.cameraList().then(function (data) {
       $scope.Cameras = data.data;
     });
   };
   $scope.cameraList();
 
-  $scope.removeCamera = function(id){ 
-    var myModal = $modal({title : 'Are you sure you want delete selected camera?',scope: $scope, template: 'pages/modalAdmin.html', show: false});
-    myModal.$promise.then(myModal.show);
-
-    $scope.delete = function() {
-      myModal.$promise.then(myModal.hide);
-      adminService.deleteCamera(id).then(function (data){
-        var index = -1;   
-        var comArr = eval($scope.Cameras);
-        for( var i = 0; i < comArr.length; i++ ) {
-          if(comArr[i].id === id){
-            index = i;
-            break;
-          }
-        }
-        if(index === -1){
-          alert("Something gone wrong");
-        } else {
-          $scope.Cameras.splice(index, 1); 
-          $alert({title: 'Camera deleted successfully!', placement: 'top', type: 'info', show: true, duration: 2});
-        } 
-      }, function (data){
-        alert("An error ocurred in the database. Please try again.");
-      });  
-    }
+  $scope.activeCamera = function(data){ 
+    var counter = 0;
+    var length = data.length;
+   
+    angular.forEach(data, function(data, key) {
+        var id = data[1];
+        var active;
+        if (data[2] == 'true')
+           active = 0;
+        else
+          active = 1;
+        adminService.activeCamera(id, active).then(function (data){
+          counter++;
+          if (counter == length) {
+            $alert({title: 'Cameras have successfully changed their state!', placement: 'top', type: 'info', show: true, duration: 2}); 
+            $scope.cameraList();
+          } 
+        }, function (data) {
+          alert("An error ocurred in the database. Please try again.");
+        });
+      });
   };
 
   $scope.formCameraAllGood = function () {
     if($scope.locationGood && $scope.latitudeGood && $scope.longitudeGood && $scope.ipGood){
-      adminService.addCamera($scope.myform.location.$viewValue,$scope.myform.latitude.$viewValue, $scope.myform.longitude.$viewValue, $scope.myform.ip.$viewValue).then(function (response){
+      adminService.addCamera($scope.myform.location.$viewValue,$scope.myform.latitude.$viewValue, $scope.myform.longitude.$viewValue, $scope.myform.ip.$viewValue, $scope.myform.activeCamera.$viewValue).then(function (response){
         $alert({title: 'New camera added successfully!', placement: 'top', type: 'info', show: true, duration: 2});
         $scope.cameraList();
       }, function (response) {

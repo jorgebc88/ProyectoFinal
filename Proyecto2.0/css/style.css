@@ -555,6 +555,12 @@ background-color: #000;
 .alignMiddle{
   vertical-align: middle !important;
 }
+#table{
+  cursor: pointer;
+}
+#cameraTable{
+  cursor: pointer;
+}
 /**********************************END ADMIN*******************************************/
 @media screen and (max-width: 767px) {
   .info-box{
