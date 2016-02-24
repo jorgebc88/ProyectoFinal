@@ -16,19 +16,29 @@
 </header>
 <div class="container" id="video">
   <div class="row videoHome">
-    <article class="articleMain container col-xs-12 col-md-8 form-group">
-      <h1 class="text-left">Camera</h1>
-      <canvas id="videoCanvas" class="videoCanvas">
-        <p>
-          Please use a browser that supports the Canvas Element, like
-          <a href="http://www.google.com/chrome">Chrome</a>,
-          <a href="http://www.mozilla.com/firefox/">Firefox</a>,
-          <a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
-        </p>
-      </canvas>
+    <article class="articleMain container col-xs-12 col-md-8">
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="text-left"><h1>Camera</h1></label>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-default dropdown-whiteColor" ng-model="cameraSelected" data-html="1" bs-options="camera.location for camera in cameras" bs-select>
+            Action <span class="caret"></span>
+          </button>
+        </div>
+      </form>
+      <div class="responsive-container">
+        <div class="dummy"></div>
+        <div class="img-container">
+           <img ng-src="http://192.168.2.120:{{port}}" alt="{{cameraSelected.location}}" height="100%" width="90%">
+        </div>
+      </div>
+      
     </article>
     <aside class="asideMain col-xs-12 col-md-4">
-      <h1 class="text-left">Statistics</h1>
+      <form class="form-inline">
+      <label><h1 class="text-left">Statistics</h1></label>
+      </form>
       <div class="col-md-12 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-gray"><img class="imgIcon" src="img/all.png" alt="All"></span>

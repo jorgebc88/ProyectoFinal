@@ -11,7 +11,7 @@
 
 (function(){
 
-	/*"use strict";*/
+	"use strict";
 
 	//Declare root variable - window in the browser, global on the server
 	var root = this,
@@ -2061,6 +2061,7 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
 	};
 
 
@@ -2086,10 +2087,10 @@
 					return (this.calculateX(1) - this.calculateX(0)) - (2*options.barValueSpacing);
 				},
 				calculateBarWidth : function(datasetCount){
-                    //The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
-                    var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barDatasetSpacing);
-                    
-                    return (baseWidth / datasetCount);
+					//The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
+					var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barDatasetSpacing);
+
+					return (baseWidth / datasetCount);
 				}
 			});
 

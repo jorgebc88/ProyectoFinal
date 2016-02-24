@@ -460,6 +460,64 @@ margin-left: 15px;
 margin-right: 15px;
 background-color: #000;
 }
+.dropdown-whiteColor .select {
+  background-color: #fff !important;
+}
+.responsive-container {
+    position: relative;
+    width: 100%;
+    height: 405px;
+}
+
+.dummy {
+    padding-top: 100%; /* forces 1:1 aspect ratio */
+}
+
+.img-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    text-align:center; /* Align center inline elements */
+    font: 0/0 a;
+    background-color: #222;
+    
+}
+
+.img-container:before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.img-container img {
+    vertical-align: middle;
+    display: inline-block;
+    background-image: url(../img/video-streaming.jpg);
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: contain;
+}
+.form-group .dropdown-menu{
+  background-color: #fff !important;
+}
+.form-group .dropdown-menu > li > a:hover,
+.form-group .dropdown-menu > li > a:focus {
+  color: #000;
+  text-decoration: none;
+  background-color: #F2F2F2;
+}
+.form-group .dropdown-menu > .active > a,
+.form-group .dropdown-menu > .active > a:hover,
+.form-group .dropdown-menu > .active > a:focus {
+  color: #000;
+  text-decoration: none;
+  background-color: #9d9d9d;
+  outline: 0;
+}
 /**********************************END HOME*******************************************/
 /**********************************STATICS*******************************************/
 #statistics{
@@ -590,4 +648,9 @@ background-color: #000;
   .aca {
     margin-top: 10px !important;
   }
+  .responsive-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
 }

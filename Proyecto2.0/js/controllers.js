@@ -1,4 +1,4 @@
-var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap','datatables', 'datatables.select', 'datatables.buttons', 'datatables.bootstrap']);
+var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap','mgcrea.ngStrap.helpers.parseOptions', 'datatables', 'datatables.select', 'datatables.buttons', 'datatables.bootstrap']);
 
 app.controller('indexCtrl',['$scope','$cookieStore','$location','userConService','$http', '$modal', '$aside', function ($scope,$cookieStore,$location,userConService,$http,$modal,$aside){  
   var myOtherAside = $aside({scope: $scope, show: false, template: 'pages/menu.html', animation: "am-fade-and-slide-left", placement: "left"});
@@ -15,6 +15,7 @@ $scope.LoggedUser = [
 $scope.dropdown = [
 {text: 'Pie chart stats', href: '#/statistics#statistics'},
 {text: 'Bar stats', href: '#/stats#statistics'},
+{text: 'Rankings', href: '#/ranking#statistics'},
 ];
 $scope.isActive = function (viewLocation) { 
   return viewLocation === $location.path();
@@ -33,7 +34,7 @@ $scope.showModal = function() {
   myOtherModal.$promise.then(myOtherModal.show);
 };
 $scope.logout = function(){
-$http.get('http://localhost:8080/REST-API/user/logout');//http://192.168.2.108:8080
+$http.get('http://192.168.2.120:8080/REST-API/user/logout');//http://192.168.2.108:8080
 $scope.userConnected = {'name': "", 'level': "", 'connected':""};
 $cookieStore.remove('connected');
 $cookieStore.remove('level');
@@ -63,7 +64,7 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   $scope.login = function (){
     var userName = $scope.userName;
     var password = $scope.password;
-    var usr = $http.post('http://localhost:8080/REST-API/user/login', {"userName": userName, "password": password})
+    var usr = $http.post('http://192.168.2.120:8080/REST-API/user/login', {"userName": userName, "password": password})
     .then(function(response) {
       session.resolve(response.data);
     },function(response) {
@@ -101,9 +102,23 @@ app.controller('loginCtrl',['$scope','$http','$q','$log','$cookieStore','$locati
   };
 }]);
 
-app.controller('homeCtrl',['$scope', '$document', '$http', '$location', function ($scope, $document, $http, $location) {
-
-  $scope.sse = $.SSE('http://localhost:8080/REST-API/detectedObject/serverSentEvents', {
+app.controller('homeCtrl',['$scope', '$document', '$http', '$location','adminService', function ($scope, $document, $http, $location, adminService) {
+$scope.bike =0;
+$scope.car =0;
+$scope.bus =0;
+adminService.cameraList().then(function(data){
+  $scope.cameras = [];
+  angular.forEach(data.data, function(data){
+    if (data.active == true) {
+      $scope.cameras.push(data);
+    }
+  });
+  $scope.cameraSelected = $scope.cameras[0];
+  $scope.port = $scope.cameraSelected.id + 8090;
+  $scope.video($scope.cameraSelected.id);
+});
+  $scope.video = function (id) {
+    $scope.sse = $.SSE('http://192.168.2.120:8080/REST-API/detectedObject/serverSentEvents?cameraId=' + id, {
     onOpen: function(e){  
     },
     onEnd: function(e){ 
@@ -111,55 +126,36 @@ app.controller('homeCtrl',['$scope', '$document', '$http', '$location', function
     onError: function(e){ 
       console.log("Could not connect"); 
     },
-    onMessage: function(e){ 
+    onMessage: function(e){
       $scope.objectDetected = angular.fromJson(e.data);
-//$scope.person = $scope.objectDetected.detectedObject[0].person + $scope.objectDetected.detectedObject[1].person;
-$scope.bike = $scope.objectDetected.detectedObject[0].bike + $scope.objectDetected.detectedObject[1].bike;
-$scope.car = $scope.objectDetected.detectedObject[0].car + $scope.objectDetected.detectedObject[1].car;
-$scope.bus = $scope.objectDetected.detectedObject[0].bus + $scope.objectDetected.detectedObject[1].bus;
-//$scope.personDown = $scope.objectDetected.detectedObject[0].person;
-$scope.bikeDown = $scope.objectDetected.detectedObject[0].bike;
-$scope.carDown = $scope.objectDetected.detectedObject[0].car;
-$scope.busDown = $scope.objectDetected.detectedObject[0].bus;
-//$scope.personUp = $scope.objectDetected.detectedObject[1].person;
-$scope.bikeUp = $scope.objectDetected.detectedObject[1].bike;
-$scope.carUp = $scope.objectDetected.detectedObject[1].car;
-$scope.busUp = $scope.objectDetected.detectedObject[1].bus;
-if ($location.path() != "/home"){
-  $scope.sse.stop();
-}
-$scope.$apply(function () {
-});
-}    
-});
-$scope.sse.start();
-var canvas = document.getElementById('videoCanvas');
-var ctx = canvas.getContext('2d');
-ctx.fillStyle = '#444';
-ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
-// Setup the WebSocket connection and start the player
-var client = new WebSocket( 'ws://localhost:8084/' );
-var player = new jsmpeg(client, {canvas:canvas});
-$scope.parts = [
-{name: "Presentation", link: "presentation"},
-{name: "Video", link: "video"},
-{name: "References", link: "info"}
-];
-$scope.myInterval = 5000;
-var slides = $scope.slides = [];
-$scope.addSlide = function() {
-  var newWidth = 700 + slides.length + 1;
-slides.push({/*
-image: 'http://placekitten.com/' + newWidth + '/403',
-text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]*/
-image: 'img/1.jpg/',
-text: 'Camera 1'
-});
-};
-for (var i=0; i<1; i++) {
-  $scope.addSlide();
-}
+      $scope.bike = $scope.objectDetected.detectedObject[0].bike;
+      $scope.car = $scope.objectDetected.detectedObject[0].car;
+      $scope.bus = $scope.objectDetected.detectedObject[0].bus;
+      if ($location.path() != "/home"){
+        $scope.sse.stop();
+      }
+      $scope.$apply(function () {
+        if($scope.cameraSelected.id != id) {
+          $scope.sse.stop();
+          $scope.port = $scope.cameraSelected.id + 8090;
+          $scope.video($scope.cameraSelected.id);
+        }
+      });
+    }    
+  });
+  $scope.sse.start();
+
+  };
+  
+    
+
+ 
+  
+  $scope.parts = [
+  {name: "Presentation", link: "presentation"},
+  {name: "Video", link: "video"},
+  {name: "References", link: "info"}
+  ];
 }]).value('duScrollOffset', 30);
 
 app.controller("statisticsCtrl",['$scope','$http','$location', function ($scope,$http,$location) { 
@@ -193,7 +189,7 @@ app.controller("statisticsCtrl",['$scope','$http','$location', function ($scope,
     responsive : true,
   };
 
-  $scope.sse = $.SSE('http://192.168.2.120:8080/REST-API/detectedObject/serverSentEvents?cameraId=2', {
+  $scope.sse = $.SSE('http://192.168.2.120:8080/REST-API/detectedObject/serverSentEvents?cameraId=1', {
     onOpen: function(e){  
     },
     onEnd: function(e){ 
@@ -480,6 +476,170 @@ app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$fil
       [$scope.sundayDown.length, $scope.mondayDown.length, $scope.tuesdayDown.length, $scope.wednesdayDown.length, $scope.thursdayDown.length, $scope.fridayDown.length, $scope.saturdayDown.length]
     ];
     $scope.colours = [$scope.colorUp, $scope.colorDown];
+  }
+}]);
+
+app.controller('rankingCtrl',['$scope','$http','$location', 'rankingService', 'adminService', function ($scope,$http,$location,rankingService,adminService) { 
+  adminService.cameraList().then(function(data){
+    $scope.cameras = data.data;
+   
+  });
+  
+  $scope.legend="";
+  $scope.tabs=0;
+  
+  rankingService.rankingByYear().then(function (data) {
+    $scope.draw(0, data);
+  });
+  
+  $scope.draw = function (tabs, data) {
+      var dataChart = [];
+      var labels = [];
+      var amount = [];
+      var counter = 0;
+      var flag = 0;
+  
+    angular.forEach($scope.cameras, function(camera){
+      angular.forEach(data.data, function(data){
+        counter++;
+        if(camera.id == data[0]){
+          dataChart.push({"location": camera.location, "amount":data[1]});
+          flag = 1;
+        }
+      })
+      if (flag == 0) {
+        dataChart.push({"location": camera.location, "amount":0})
+      } else {
+        flag = 0;
+      }
+    });
+    dataChart.sort(function(a, b) {
+      return parseFloat(a.amount) - parseFloat(b.amount);
+    });
+
+    for (var i = dataChart.length; i < 10; i++) {
+      dataChart.splice(-10,0,{"location": "No camera", "amount":0});
+    };
+  
+    angular.forEach(dataChart, function(dataChart){
+      labels.push(dataChart.location);
+      amount.push(dataChart.amount);
+    })
+
+    var barChartData = {
+      labels : labels,
+      datasets : [
+        {
+          fillColor: "rgba(51,3,0,0.2)",
+          strokeColor: "rgba(51,3,0,1)",
+          pointColor: "rgba(51,3,0,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(51,3,0,0.8)",
+          data : amount
+        }
+      ]
+    };
+    var ctx = document.getElementById("canvas").getContext("2d");
+    var chart = new Chart(ctx).HorizontalBar(barChartData, {
+      barShowStroke: false,
+
+    });
+   
+/*
+  var mes = data[0];
+      mes = month[mes];
+var month = new Array();
+      month[1] = "Enero";
+      month[2] = "Febrero";
+      month[3] = "Marzo";
+      month[4] = "Abril";
+      month[5] = "Mayo";
+      month[6] = "Junio";
+      month[7] = "Julio";
+      month[8] = "Agosto";
+      month[9] = "Septiembre";
+      month[10] = "Octubre";
+      month[11] = "Noviembre";
+      month[12] = "Diciembre";
+    $scope.tabs = tabs;
+    if ($scope.tabs == 0) {
+      $scope.legend = "All";
+      $scope.colorUp = { // grey
+        fillColor: "rgba(51,3,0,0.2)",
+        strokeColor: "rgba(51,3,0,1)",
+        pointColor: "rgba(51,3,0,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(51,3,0,0.8)"
+      };
+      $scope.colorDown = { // grey
+        fillColor: "rgba(34,2,0,0.2)",
+        strokeColor: "rgba(34,2,0,1)",
+        pointColor: "rgba(34,2,0,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(34,2,0,0.8)"
+      };
+      $scope.objectType ="All";
+    } else if ($scope.tabs == 1) {
+      $scope.legend = "Bikes";
+      $scope.colorUp = {
+        fillColor: "rgba(221,77,51,0.2)",
+        strokeColor: "rgba(221,77,51,1)",
+        pointColor: "rgba(221,77,51,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(221,77,51,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(177,67,54,0.2)",
+        strokeColor: "rgba(177,67,54,1)",
+        pointColor: "rgba(177,67,54,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(177,67,54,0.8)"
+      };
+      $scope.objectType="Bike"; 
+    } else if ($scope.tabs == 2) {
+      $scope.legend = "Cars";
+      $scope.colorUp = {
+        fillColor: "rgba(0,166,90,0.2)",
+        strokeColor: "rgba(0,166,90,1)",
+        pointColor: "rgba(0,166,90,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(0,166,90,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(4,95,53,0.2)",
+        strokeColor: "rgba(4,95,53,1)",
+        pointColor: "rgba(4,95,53,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(4,95,53,0.8)"
+      };
+      $scope.objectType="Car"; 
+    } else if ($scope.tabs == 3) {
+      $scope.legend = "Buses/Trucks";
+      $scope.colorUp = {
+        fillColor: "rgba(243,156,18,0.2)",
+        strokeColor: "rgba(243,156,18,1)",
+        pointColor: "rgba(243,156,18,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(243,156,18,0.8)"
+      };
+      $scope.colorDown = {
+        fillColor: "rgba(198,127,15,0.2)",
+        strokeColor: "rgba(198,127,15,1)",
+        pointColor: "rgba(198,127,15,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(198,127,15,0.8)"
+      };
+      $scope.objectType="Bus"; 
+    }*/
   }
 }]);
 
