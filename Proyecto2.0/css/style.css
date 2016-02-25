@@ -493,7 +493,7 @@ background-color: #000;
     height: 100%;
 }
 
-.img-container img {
+.img-container { /*img*/
     vertical-align: middle;
     display: inline-block;
     background-image: url(../img/video-streaming.jpg);

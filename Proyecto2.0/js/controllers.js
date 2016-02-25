@@ -1,7 +1,7 @@
 var app = angular.module('app.controllers',['ngRoute','ngResource','ngCookies','ngSanitize','ngAnimate', 'chart.js','duScroll','mgcrea.ngStrap','mgcrea.ngStrap.helpers.parseOptions', 'datatables', 'datatables.select', 'datatables.buttons', 'datatables.bootstrap']);
 
 app.controller('indexCtrl',['$scope','$cookieStore','$location','userConService','$http', '$modal', '$aside', function ($scope,$cookieStore,$location,userConService,$http,$modal,$aside){  
-  var myOtherAside = $aside({scope: $scope, show: false, template: 'pages/menu.html', animation: "am-fade-and-slide-left", placement: "left"});
+var myOtherAside = $aside({scope: $scope, show: false, template: 'pages/menu.html', animation: "am-fade-and-slide-left", placement: "left"});
 // Show when some event occurs (use $promise property to ensure the template has been loaded)
 $scope.showAside = function () {
   myOtherAside.$promise.then(myOtherAside.show());
@@ -10,7 +10,7 @@ $scope.closeAside = function () {
   myOtherAside.$promise.then(myOtherAside.hide());
 };
 $scope.LoggedUser = [
-{text: ' <span class="glyphicon glyphicon-log-out"></span> Close session', click: 'showModal()'}
+{text: ' <span class="glyphicon glyphicon-log-out"></span> Close session', click: 'showModal()', show: true}
 ];
 $scope.dropdown = [
 {text: 'Pie chart stats', href: '#/statistics#statistics'},
@@ -146,10 +146,6 @@ adminService.cameraList().then(function(data){
   $scope.sse.start();
 
   };
-  
-    
-
- 
   
   $scope.parts = [
   {name: "Presentation", link: "presentation"},
@@ -322,7 +318,10 @@ app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$fil
   });
   
   $scope.draw = function (tabs, data) {
-
+    if (angular.isDefined()) {
+      chart.destroy();
+      delete chart;
+    }
     $scope.tabs = tabs;
     if ($scope.tabs == 0) {
       $scope.legend = "All";
@@ -469,6 +468,12 @@ app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$fil
         }
       }
     });
+    $scope.$on('create', function (event, chart) {
+       
+        $scope.chart = chart;
+        $scope.chart.destroy();
+        
+    });
     $scope.labels = ['Sunday', 'Monday', 'Thursday', 'Wednesday', 'Tuesday', 'Friday', 'Saturday'];
     $scope.series = [$scope.legend + '-Up', $scope.legend + '-Down'];
     $scope.data = [
@@ -479,48 +484,82 @@ app.controller('statsCtrl',['$scope','$http','$location', 'objectService', '$fil
   }
 }]);
 
-app.controller('rankingCtrl',['$scope','$http','$location', 'rankingService', 'adminService', function ($scope,$http,$location,rankingService,adminService) { 
-  adminService.cameraList().then(function(data){
-    $scope.cameras = data.data;
-   
-  });
+app.controller('rankingCtrl',['$scope','$http', 'rankingService', 'adminService', function ($scope,$http,rankingService,adminService) { 
+  $scope.maxDate = new Date();
+  $scope.minDate = new Date('2000');
+  $scope.startDate = $scope.minDate;
+  $scope.aux = new Date();
+  $scope.selectedDate = new Date();
   
+  $scope.year = $scope.aux.getFullYear();
   $scope.legend="";
-  $scope.tabs=0;
-  
-  rankingService.rankingByYear().then(function (data) {
-    $scope.draw(0, data);
+  $scope.tabsHorizontal = 0;
+
+  adminService.cameraList().then(function(data){
+          console.log(1);
+          $scope.cameras = data.data;
+          $scope.activeTab(0);
   });
-  
-  $scope.draw = function (tabs, data) {
-      var dataChart = [];
-      var labels = [];
-      var amount = [];
-      var counter = 0;
-      var flag = 0;
-  
+
+  $scope.activeTab = function(tab) {
+    console.log(2);
+    if (tab == 0) {
+     
+    } else if(tab == 1) {
+      console.log(3);
+      $scope.drawByYear($scope.year);
+    } else if(tab == 2) {
+
+    } else if(tab == 3) {
+
+    }
+  };
+  $scope.drawByYear = function (year) {
+    console.log(4);
+    rankingService.rankingByYear(year).then(function (data) {
+      console.log(5);
+      $scope.drawHorizontalBar(data.data);
+    });
+  };
+
+  $scope.drawHorizontalBar = function(data) {
+    console.log(6);
+    if(angular.isDefined($scope.chart)){
+      console.log(61);
+      $scope.chart.destroy();
+    }
+
+    var dataChart = [];
+    var labels = [];
+    var amount = [];
+    var counter = 0;
+    var flag = 0;
+    
     angular.forEach($scope.cameras, function(camera){
-      angular.forEach(data.data, function(data){
+      angular.forEach(data, function(data){
         counter++;
         if(camera.id == data[0]){
+          console.log(7);
           dataChart.push({"location": camera.location, "amount":data[1]});
           flag = 1;
         }
       })
+
       if (flag == 0) {
         dataChart.push({"location": camera.location, "amount":0})
       } else {
         flag = 0;
       }
     });
+
     dataChart.sort(function(a, b) {
       return parseFloat(a.amount) - parseFloat(b.amount);
     });
 
-    for (var i = dataChart.length; i < 10; i++) {
+    for (var i = dataChart.length; i < 5; i++) {
       dataChart.splice(-10,0,{"location": "No camera", "amount":0});
     };
-  
+    
     angular.forEach(dataChart, function(dataChart){
       labels.push(dataChart.location);
       amount.push(dataChart.amount);
@@ -528,119 +567,22 @@ app.controller('rankingCtrl',['$scope','$http','$location', 'rankingService', 'a
 
     var barChartData = {
       labels : labels,
-      datasets : [
-        {
-          fillColor: "rgba(51,3,0,0.2)",
-          strokeColor: "rgba(51,3,0,1)",
-          pointColor: "rgba(51,3,0,1)",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(51,3,0,0.8)",
-          data : amount
-        }
-      ]
-    };
-    var ctx = document.getElementById("canvas").getContext("2d");
-    var chart = new Chart(ctx).HorizontalBar(barChartData, {
-      barShowStroke: false,
-
-    });
-   
-/*
-  var mes = data[0];
-      mes = month[mes];
-var month = new Array();
-      month[1] = "Enero";
-      month[2] = "Febrero";
-      month[3] = "Marzo";
-      month[4] = "Abril";
-      month[5] = "Mayo";
-      month[6] = "Junio";
-      month[7] = "Julio";
-      month[8] = "Agosto";
-      month[9] = "Septiembre";
-      month[10] = "Octubre";
-      month[11] = "Noviembre";
-      month[12] = "Diciembre";
-    $scope.tabs = tabs;
-    if ($scope.tabs == 0) {
-      $scope.legend = "All";
-      $scope.colorUp = { // grey
+      datasets : [{
         fillColor: "rgba(51,3,0,0.2)",
         strokeColor: "rgba(51,3,0,1)",
         pointColor: "rgba(51,3,0,1)",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(51,3,0,0.8)"
-      };
-      $scope.colorDown = { // grey
-        fillColor: "rgba(34,2,0,0.2)",
-        strokeColor: "rgba(34,2,0,1)",
-        pointColor: "rgba(34,2,0,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(34,2,0,0.8)"
-      };
-      $scope.objectType ="All";
-    } else if ($scope.tabs == 1) {
-      $scope.legend = "Bikes";
-      $scope.colorUp = {
-        fillColor: "rgba(221,77,51,0.2)",
-        strokeColor: "rgba(221,77,51,1)",
-        pointColor: "rgba(221,77,51,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(221,77,51,0.8)"
-      };
-      $scope.colorDown = {
-        fillColor: "rgba(177,67,54,0.2)",
-        strokeColor: "rgba(177,67,54,1)",
-        pointColor: "rgba(177,67,54,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(177,67,54,0.8)"
-      };
-      $scope.objectType="Bike"; 
-    } else if ($scope.tabs == 2) {
-      $scope.legend = "Cars";
-      $scope.colorUp = {
-        fillColor: "rgba(0,166,90,0.2)",
-        strokeColor: "rgba(0,166,90,1)",
-        pointColor: "rgba(0,166,90,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(0,166,90,0.8)"
-      };
-      $scope.colorDown = {
-        fillColor: "rgba(4,95,53,0.2)",
-        strokeColor: "rgba(4,95,53,1)",
-        pointColor: "rgba(4,95,53,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(4,95,53,0.8)"
-      };
-      $scope.objectType="Car"; 
-    } else if ($scope.tabs == 3) {
-      $scope.legend = "Buses/Trucks";
-      $scope.colorUp = {
-        fillColor: "rgba(243,156,18,0.2)",
-        strokeColor: "rgba(243,156,18,1)",
-        pointColor: "rgba(243,156,18,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(243,156,18,0.8)"
-      };
-      $scope.colorDown = {
-        fillColor: "rgba(198,127,15,0.2)",
-        strokeColor: "rgba(198,127,15,1)",
-        pointColor: "rgba(198,127,15,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(198,127,15,0.8)"
-      };
-      $scope.objectType="Bus"; 
-    }*/
-  }
+        pointHighlightStroke: "rgba(51,3,0,0.8)",
+        data : amount
+      }]
+    };
+    
+    var ctx = document.getElementById("canvas").getContext("2d");
+    $scope.chart = new Chart(ctx).HorizontalBar(barChartData, {
+      barShowStroke: false,
+    }); 
+  };
 }]);
 
 app.controller('adminCtrl',[ '$scope', 'adminService', '$modal', '$alert', 'DTOptionsBuilder', 'DTDefaultOptions', 'DTColumnDefBuilder', function ($scope, adminService, $modal, $alert, DTOptionsBuilder, DTDefaultOptions, DTColumnDefBuilder) {

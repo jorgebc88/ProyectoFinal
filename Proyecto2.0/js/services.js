@@ -73,8 +73,8 @@ app.service('adminService', ['$http', function ($http){
 }]);
 
 app.service('rankingService', ['$http', function ($http){
-  var rankingByYear = function () {
-    return $http.get('http://192.168.2.120:8080/REST-API/detectedObject/rankingByYear?year=2016');
+  var rankingByYear = function (year) {
+    return $http.get('http://192.168.2.120:8080/REST-API/detectedObject/rankingByYear?year=' + year);
   };
 
   return {
